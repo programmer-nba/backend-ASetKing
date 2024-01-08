@@ -6,7 +6,7 @@ require("dotenv").config();
 
 router.post("/", async (req, res) => {
   try {
-    let admin = await Admins.findOne({admin_username: req.body.admin_username});
+    let admin = await Admins.findOne({admin_username: req.body.username});
     if (!admin) {
       await checkEmployee(req, res);
     } else {
@@ -40,7 +40,6 @@ router.post("/", async (req, res) => {
 });
 
 const checkEmployee = async (req, res) => {
-  console.log(req.body);
   try {
     let employee = await Employees.findOne({username: req.body.username});
     if (!employee) {
