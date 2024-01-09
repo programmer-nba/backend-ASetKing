@@ -14,17 +14,17 @@ app.use(express.json());
 app.use(cors());
 
 // login
-app.use("/AChetDong/login", require("./routes/login"));
+app.use("/ASetKing/login", require("./routes/login"));
 
 // me
-app.use("/AChetDong/me", require("./routes/me"));
+app.use("/ASetKing/me", require("./routes/me"));
 
 // user
-app.use("/AChetDong/admin", require("./routes/user/admin"));
-app.use("/AChetDong/employee", require("./routes/user/employee"));
+app.use("/ASetKing/admin", require("./routes/user/admin"));
+app.use("/ASetKing/employee", require("./routes/user/employee"));
 
 // product
-app.use("/AChetDong/product", require("./routes/product/product"));
+app.use("/ASetKing/product", require("./routes/product/product"));
 
 const port = process.env.PORT || 1234;
 app.listen(port, console.log(`Listening on port ${port}`));
