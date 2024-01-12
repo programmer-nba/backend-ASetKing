@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const product = require("../../controllers/product/product.controller");
-const category = require("../../controllers/product/category.controller");
+const category_main = require("../../controllers/product/category.main.controller");
+const category_second = require("../../controllers/product/category.second.controller");
+const history = require("../../controllers/product/history.controller");
 
 router.post("/", product.create);
 router.get("/all", product.getProductAll);
@@ -8,10 +10,21 @@ router.get("/:id", product.getProductById);
 router.put("/:id", product.update);
 router.delete("/:id", product.delete);
 
-router.post("/category", category.create);
-router.get("/category/all", category.getCategoryAll);
-router.get("/category/:id", category.getCategoryById);
-router.put("/category/:id", category.update);
-router.delete("/category/:id", category.delete);
+// Category Main
+router.post("/category/main", category_main.create);
+router.get("/category/main/all", category_main.getCategoryAll);
+router.get("/category/main/:id", category_main.getCategoryById);
+router.put("/category/main/:id", category_main.update);
+router.delete("/category/main/:id", category_main.delete);
+
+// Category Second
+router.post("/category/second", category_second.create);
+router.get("/category/second/all", category_second.getCategoryAll);
+router.get("/category/second/:id", category_second.getCategoryById);
+router.put("/category/second/:id", category_second.update);
+router.delete("/category/second/:id", category_second.delete);
+
+// History Product
+router.post("/history", history.create);
 
 module.exports = router;

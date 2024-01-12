@@ -26,5 +26,8 @@ app.use("/ASetKing/employee", require("./routes/user/employee"));
 // product
 app.use("/ASetKing/product", require("./routes/product/product"));
 
+// ip
+app.use("/ASetKing/ip", require("./routes/ip"));
+
 const port = process.env.PORT || 1234;
 app.listen(port, console.log(`Listening on port ${port}`));

@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const {Employees} = require("../model/employee.model");
-const {Admins} = require("../model/admin.model");
+const {Employees} = require("../model/user/employee.model");
+const {Admins} = require("../model/user/admin.model");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 

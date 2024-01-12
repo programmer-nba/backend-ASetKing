@@ -1,4 +1,4 @@
-const {Categorys, validate} = require("../../model/product/category.model");
+const {Positions, validate} = require("../../model/user/position.model");
 
 exports.create = async (req, res) => {
   try {
@@ -7,48 +7,53 @@ exports.create = async (req, res) => {
       return res
         .status(403)
         .send({message: error.details[0].message, status: false});
-    const category = await Categorys.findOne({name: req.body.name});
-    if (category)
+    const position = await Positions.findOne({
+      position: req.body.position,
+    });
+    if (position)
       return res
         .status(401)
-        .send({status: false, message: "มีประสินค้านี้ในระบบแล้ว"});
-    await new Categorys({
+        .send({status: false, message: "ระดับพนักงานนี้มีในระบบแล้ว"});
+    const new_position = await Positions({
       ...req.body,
-    }).save();
-    return res
-      .status(200)
-      .send({status: true, message: "เพิ่มประเภทสินค้าสำเร็จ"});
+    });
+    new_position.save();
+    return res.status(200).send({
+      status: true,
+      message: "เพิ่มระดับพนักงานเรียบร้อย",
+      data: new_position,
+    });
   } catch (err) {
     return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
-exports.getCategoryAll = async (req, res) => {
+exports.getPositionAll = async (req, res) => {
   try {
-    const category = await Categorys.find();
-    if (!category)
+    const position = await Positions.find();
+    if (!position)
       return res
         .status(404)
         .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
     return res
       .status(200)
-      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: category});
+      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: position});
   } catch (err) {
     return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
-exports.getCategoryById = async (req, res) => {
+exports.getPositionById = async (req, res) => {
   try {
     const id = req.params.id;
-    const category = await Categorys.findById(id);
-    if (!category)
+    const position = await Positions.findById(id);
+    if (!position)
       return res
         .status(404)
         .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
     return res
       .status(200)
-      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: category});
+      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: position});
   } catch (err) {
     return res.status(500).send({message: "Internal Server Error"});
   }
@@ -59,7 +64,7 @@ exports.update = async (req, res) => {
     if (!req.body)
       return res.status(404).send({status: false, message: "ส่งข้อมูลผิดพลาด"});
     const id = req.params.id;
-    Categorys.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
+    Positions.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
       .then((item) => {
         if (!item)
           return res
@@ -83,17 +88,17 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const id = req.params.id;
-    Categorys.findByIdAndDelete(id, {useFindAndModify: false})
+    Positions.findByIdAndDelete(id, {useFindAndModify: false})
       .then((item) => {
         if (!item)
           return res
             .status(404)
-            .send({message: "ไม่สามารถลบข้อมูลประเภทสินค้านี้ได้"});
-        return res.status(200).send({message: "ลบข้อมูลประเภทสินค้าสำเร็จ"});
+            .send({message: "ไม่สามารถลบข้อมูลระดับพนักงานนี้ได้"});
+        return res.status(200).send({message: "ลบข้อมูลระดับพนักงานสำเร็จ"});
       })
       .catch((err) => {
         res.status(500).send({
-          message: "ไม่สามารถลบข้อมูลประเภทสินค้านี้ได้",
+          message: "ไม่สามารถลบข้อมูลระดับพนักงานนี้ได้",
           status: false,
         });
       });

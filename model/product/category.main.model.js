@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-const CategorySchema = new mongoose.Schema({
+const CategoryMainSchema = new mongoose.Schema({
   name: {type: String, required: true},
 });
 
-const Categorys = mongoose.model("category", CategorySchema);
+const CategoryMains = mongoose.model("category_main", CategoryMainSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
@@ -14,4 +14,4 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
-module.exports = {Categorys, validate};
+module.exports = {CategoryMains, validate};

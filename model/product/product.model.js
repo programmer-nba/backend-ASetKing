@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const ProductSchema = new mongoose.Schema({
-  number: {type: Number},
-  status: {type: Boolean, required: false, default: true},
+  number: {type: Number, required: true},
+  status: {type: String, required: false, default: ""},
   category_main: {type: String, require: true},
   category_second: {type: String, require: false, default: ""},
   model: {type: String, require: true},
@@ -30,6 +30,8 @@ const Products = mongoose.model("product", ProductSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
+    number: Joi.number().required(),
+    status: Joi.string().default(""),
     category_main: Joi.string().required(),
     category_second: Joi.string().default(""),
     model: Joi.string().required(),

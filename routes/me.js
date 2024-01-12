@@ -1,7 +1,7 @@
 const router = require("express").Router();
 require("dotenv").config();
-const {Employees} = require("../model/employee.model");
-const {Admins} = require("../model/admin.model");
+const {Employees} = require("../model/user/employee.model");
+const {Admins} = require("../model/user/admin.model");
 const auth = require("../lib/auth");
 
 router.post("/", auth, async (req, res) => {

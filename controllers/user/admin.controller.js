@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const {Admins, validate} = require("../../model/admin.model");
+const {Admins, validate} = require("../../model/user/admin.model");
 
 exports.create = async (req, res) => {
   try {
