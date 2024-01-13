@@ -1,4 +1,4 @@
-const {IPAddress, validate} = require("../model/ip.model");
+const {IPAddress, validate} = require("../../model/more/ip.model");
 
 exports.create = async (req, res) => {
   try {

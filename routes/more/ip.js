@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const ip_address = require("../controllers/ip.controller");
+const ip_address = require("../../controllers/more/ip.controller");
 
 router.post("/", ip_address.create);
 router.get("/", ip_address.getIPAddress);

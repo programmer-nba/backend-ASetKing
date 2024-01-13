@@ -27,7 +27,15 @@ app.use("/ASetKing/employee", require("./routes/user/employee"));
 app.use("/ASetKing/product", require("./routes/product/product"));
 
 // ip
-app.use("/ASetKing/ip", require("./routes/ip"));
+app.use("/ASetKing/ip", require("./routes/more/ip"));
+
+// Function
+app.use("/ASetKing/function", require("./routes/more/function"));
+
+// Delete Image
+app.use("/ASetKing/delete/image", require("./routes/more/deleteImage"));
+// UPLOAD FILE COLLECTION
+app.use("/ASetKing/image/collection", require("./routes/more/uploadfile"));
 
 const port = process.env.PORT || 1234;
 app.listen(port, console.log(`Listening on port ${port}`));
