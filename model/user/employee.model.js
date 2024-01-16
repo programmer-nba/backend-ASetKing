@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
+const getmac = require("getmac");
+const IPAddress = getmac.default();
 
 const complexityOptions = {
   min: 6,
@@ -24,7 +26,13 @@ const EmployeeSchema = new mongoose.Schema({
 
 EmployeeSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
-    {_id: this._id, name: this.name, position: this.position, row: "user"},
+    {
+      _id: this._id,
+      name: this.name,
+      position: this.position,
+      row: "employee",
+      macAddress: IPAddress,
+    },
     process.env.JWTPRIVATEKEY,
     {expiresIn: "4h"}
   );

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
+const getmac = require("getmac");
+const IPAddress = getmac.default();
 
 const complexityOptions = {
   min: 6,
@@ -27,7 +29,7 @@ AdminSchema.methods.generateAuthToken = function () {
       _id: this._id,
       name: this.admin_name,
       position: this.admin_position,
-      row: "admin",
+      macAddress: IPAddress,
     },
     process.env.JWTPRIVATEKEY,
     {

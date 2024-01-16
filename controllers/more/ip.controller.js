@@ -59,6 +59,24 @@ exports.getIPAddressById = async (req, res) => {
   }
 };
 
+exports.getIPAddressByEmployeeId = async (req, res) => {
+  try {
+    const id = req.params.employee_id;
+    const ip_address = await IPAddress.findOne({
+      name: id,
+    });
+    if (!ip_address)
+      return res
+        .status(404)
+        .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
+    return res
+      .status(200)
+      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: ip_address});
+  } catch (err) {
+    return res.status(500).send({message: "Internal Server Error"});
+  }
+};
+
 exports.update = async (req, res) => {
   try {
     if (!req.body)

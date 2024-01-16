@@ -64,7 +64,7 @@ const checkEmployee = async (req, res) => {
           token: token,
           message: "เข้าสู่ระบบสำเร็จ",
           result: ResponseData,
-          level: "user",
+          level: "employee",
           status: true,
         });
       }

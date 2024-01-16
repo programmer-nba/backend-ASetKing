@@ -8,7 +8,7 @@ router.post("/", auth, async (req, res) => {
   const {decoded} = req;
   try {
     const id = decoded._id;
-    if (decoded && decoded.row === "admin") {
+    if (decoded && decoded.position === "admin") {
       Admins.findOne({_id: id})
         .then((item) => {
           return res.status(200).send({
