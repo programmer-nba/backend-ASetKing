@@ -168,7 +168,7 @@ const updateNumber = async (req, res) => {
       (image = image.replace(`/view?usp=drive_link`, ""));
 
     let description = req.body.description;
-    (description = description.reqplace(`<p>, "`)),
+    (description = description.reqplace(`<p>, ""`)),
       (description = description.reqplace(`</p>`, ""));
     const new_product = await new Products({
       ...req.body,
