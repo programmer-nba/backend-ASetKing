@@ -11,6 +11,11 @@ exports.create = async (req, res) => {
     let image = req.body.link_img;
     (image = image.replace(`https://drive.google.com/file/d/`, "")),
       (image = image.replace(`/view?usp=drive_link`, ""));
+
+    let description = req.body.description;
+    (description = description.reqplace(`<p>, "`)),
+      (description = description.reqplace(`</p>`, ""));
+
     const number_product = await Products.findOne({
       number: req.body.number,
     });
@@ -26,6 +31,7 @@ exports.create = async (req, res) => {
         const new_product = await new Products({
           ...req.body,
           pricture: image,
+          description: description,
         }).save();
         return res.status(200).send({
           status: true,
@@ -160,9 +166,14 @@ const updateNumber = async (req, res) => {
     let image = req.body.link_img;
     (image = image.replace(`https://drive.google.com/file/d/`, "")),
       (image = image.replace(`/view?usp=drive_link`, ""));
+
+    let description = req.body.description;
+    (description = description.reqplace(`<p>, "`)),
+      (description = description.reqplace(`</p>`, ""));
     const new_product = await new Products({
       ...req.body,
       pricture: image,
+      description: description,
     }).save();
     return res
       .status(200)
