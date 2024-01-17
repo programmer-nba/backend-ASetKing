@@ -1,4 +1,5 @@
 const {Products, validate} = require("../../model/product/product.model");
+const {PriceProducts} = require("../../model/product/price.product.model");
 
 exports.create = async (req, res) => {
   try {
@@ -7,6 +8,9 @@ exports.create = async (req, res) => {
       return res
         .status(403)
         .send({message: error.details[0].message, status: false});
+    let image = req.body.link_img;
+    (image = image.replace(`https://drive.google.com/file/d/`, "")),
+      (image = image.replace(`/view?usp=drive_link`, ""));
     const number_product = await Products.findOne({
       number: req.body.number,
     });
@@ -14,16 +18,21 @@ exports.create = async (req, res) => {
       const product = await Products.findOne({
         model: req.body.model,
       });
-      if (product)
+      if (product) {
         return res
           .status(401)
           .send({status: false, message: "มีสินค้านี้ในระบบแล้ว"});
-      const new_product = await new Products({
-        ...req.body,
-      }).save();
-      return res
-        .status(200)
-        .send({status: true, message: "เพิ่มสินค้าสำเร็จ", data: new_product});
+      } else {
+        const new_product = await new Products({
+          ...req.body,
+          pricture: image,
+        }).save();
+        return res.status(200).send({
+          status: true,
+          message: "เพิ่มสินค้าสำเร็จ",
+          data: new_product,
+        });
+      }
     } else {
       await updateNumber(req, res);
     }
@@ -76,7 +85,6 @@ exports.update = async (req, res) => {
       model: req.body.model,
       hl: req.body.hl,
       description: req.body.description,
-      price: req.body.price,
       note: req.body.note,
       lnsure: req.body.lnsure,
       link_spec: req.body.link_spec,
@@ -93,6 +101,7 @@ exports.update = async (req, res) => {
             .send({status: false, message: "แก้ไขข้อมูลไม่สำเร็จ"});
         const update = await Products.findOne({_id: id});
         if (update) {
+          update.price.push(req.body.price);
           update.update.push(req.body.update);
         } else {
           return res
@@ -148,8 +157,12 @@ const updateNumber = async (req, res) => {
       product.number = Number(i) + 1;
       product.save();
     }
+    let image = req.body.link_img;
+    (image = image.replace(`https://drive.google.com/file/d/`, "")),
+      (image = image.replace(`/view?usp=drive_link`, ""));
     const new_product = await new Products({
       ...req.body,
+      pricture: image,
     }).save();
     return res
       .status(200)

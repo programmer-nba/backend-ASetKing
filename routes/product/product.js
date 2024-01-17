@@ -2,7 +2,7 @@ const router = require("express").Router();
 const product = require("../../controllers/product/product.controller");
 const category_main = require("../../controllers/product/category.main.controller");
 const category_second = require("../../controllers/product/category.second.controller");
-const history = require("../../controllers/product/history.controller");
+const price_product = require("../../controllers/product/price.controller");
 
 router.post("/", product.create);
 router.get("/all", product.getProductAll);
@@ -24,7 +24,7 @@ router.get("/category/second/:id", category_second.getCategoryById);
 router.put("/category/second/:id", category_second.update);
 router.delete("/category/second/:id", category_second.delete);
 
-// History Product
-router.post("/history", history.create);
+// Price Product
+router.get("/price/:id", price_product.getPriceProduct);
 
 module.exports = router;

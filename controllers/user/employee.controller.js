@@ -84,7 +84,7 @@ exports.update = async (req, res) => {
         });
     } else {
       const salt = await bcrypt.genSalt(Number(process.env.SALT));
-      const hashPassword = await bcrypt.hash(req.body.admin_password, salt);
+      const hashPassword = await bcrypt.hash(req.body.password, salt);
       Employees.findByIdAndUpdate(
         id,
         {...req.body, password: hashPassword},
