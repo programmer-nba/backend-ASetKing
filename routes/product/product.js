@@ -27,4 +27,8 @@ router.delete("/category/second/:id", category_second.delete);
 // Price Product
 router.get("/price/:id", price_product.getPriceProduct);
 
+
+//get history
+router.get("/GetHistory/All",product.GetAllHistory)
+
 module.exports = router;
