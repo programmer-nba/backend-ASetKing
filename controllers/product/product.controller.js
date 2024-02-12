@@ -10,8 +10,8 @@ exports.create = async (req, res) => {
         .status(403)
         .send({message: error.details[0].message, status: false});
     let image = req.body.link_img;
-    (image =  (req.body.link_img || "").replace(`https://drive.google.com/file/d/`, "")),
-      (image = (req.body.link_img || "").replace(`/view?usp=drive_link`, ""));
+    (image = image.replace(`https://drive.google.com/file/d/`, "")),
+      (image = image.replace(`/view?usp=drive_link`, ""));
 
     let description = req.body.description;
     (description = description.replace(`<p>`, "")),
@@ -44,7 +44,7 @@ exports.create = async (req, res) => {
       await updateNumber(req, res);
     }
   } catch (err) {
-    return res.status(500).send({message: err.message});
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -96,6 +96,7 @@ exports.update = async (req, res) => {
           return res
             .status(404)
             .send({ status: false, message: "....แก้ไขข้อมูลไม่สำเร็จ" });
+
         const updatedProduct = await Products.findOne({ _id: id });
         if (updatedProduct) {
           const historyData = new HistoryProducts({
