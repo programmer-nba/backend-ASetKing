@@ -1,17 +1,14 @@
-const { Products, validate } = require("../../model/product/product.model");
-const { PriceProducts } = require("../../model/product/price.product.model");
-const {
-  HistoryProducts,
-  validates,
-} = require("../../model/product/history.edit.product.model");
+const {Products, validate} = require("../../model/product/product.model");
+const {PriceProducts} = require("../../model/product/price.product.model");
+const {HistoryProducts} = require("../../model/product/history.edit.product.model")
 
 exports.create = async (req, res) => {
   try {
-    const { error } = validate(req.body);
+    const {error} = validate(req.body);
     if (error)
       return res
         .status(403)
-        .send({ message: error.details[0].message, status: false });
+        .send({message: error.details[0].message, status: false});
     let image = req.body.link_img;
     (image = image.replace(`https://drive.google.com/file/d/`, "")),
       (image = image.replace(`/view?usp=drive_link`, ""));
@@ -30,7 +27,7 @@ exports.create = async (req, res) => {
       if (product) {
         return res
           .status(401)
-          .send({ status: false, message: "มีสินค้านี้ในระบบแล้ว" });
+          .send({status: false, message: "มีสินค้านี้ในระบบแล้ว"});
       } else {
         const new_product = await new Products({
           ...req.body,
@@ -47,7 +44,7 @@ exports.create = async (req, res) => {
       await updateNumber(req, res);
     }
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -57,12 +54,12 @@ exports.getProductAll = async (req, res) => {
     if (!product)
       return res
         .status(404)
-        .send({ status: false, message: "ดึงข้อมูลไม่สำเร็จ" });
+        .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
     return res
       .status(200)
-      .send({ status: true, message: "ดึงข้อมูลสำเร็จ", data: product });
+      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: product});
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -73,12 +70,12 @@ exports.getProductById = async (req, res) => {
     if (!product)
       return res
         .status(404)
-        .send({ status: false, message: "ดึงข้อมูลไม่สำเร็จ" });
+        .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
     return res
       .status(200)
-      .send({ status: true, message: "ดึงข้อมูลสำเร็จ", data: product });
+      .send({status: true, message: "ดึงข้อมูลสำเร็จ", data: product});
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -98,8 +95,7 @@ exports.update = async (req, res) => {
         if (!item)
           return res
             .status(404)
-            .send({ status: false, message: "แก้ไขข้อมูลไม่สำเร็จ" });
-
+            .send({ status: false, message: "....แก้ไขข้อมูลไม่สำเร็จ" });
         const updatedProduct = await Products.findOne({ _id: id });
         if (updatedProduct) {
           const historyData = new HistoryProducts({
@@ -127,8 +123,6 @@ exports.update = async (req, res) => {
             link_img: item.link_img,
           });
           const historyProduct = await historyData.save();
-          console.log(historyProduct);
-
           if (historyProduct) {
             return res.status(200).send({
               status: true,
@@ -161,13 +155,13 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const id = req.params.id;
-    Products.findByIdAndDelete(id, { useFindAndModify: false })
+    Products.findByIdAndDelete(id, {useFindAndModify: false})
       .then((item) => {
         if (!item)
           return res
             .status(404)
-            .send({ message: "ไม่สามารถลบข้อมูลสินค้านี้ได้" });
-        return res.status(200).send({ message: "ลบข้อมูลสินค้าสำเร็จ" });
+            .send({message: "ไม่สามารถลบข้อมูลสินค้านี้ได้"});
+        return res.status(200).send({message: "ลบข้อมูลสินค้าสำเร็จ"});
       })
       .catch((err) => {
         res.status(500).send({
@@ -176,7 +170,7 @@ exports.delete = async (req, res) => {
         });
       });
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -205,8 +199,8 @@ const updateNumber = async (req, res) => {
     }).save();
     return res
       .status(200)
-      .send({ status: true, message: "เพิ่มสินค้าสำเร็จ", data: new_product });
+      .send({status: true, message: "เพิ่มสินค้าสำเร็จ", data: new_product});
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
