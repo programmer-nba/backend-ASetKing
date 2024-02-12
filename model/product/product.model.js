@@ -10,7 +10,16 @@ const ProductSchema = new mongoose.Schema({
   pricture: {type: String, require: false, default: ""},
   hl: {type: String, require: true},
   description: {type: String, require: true},
-  price: {type: Array, required: false, default: []},
+  price: {
+    type: {
+      one: {type: Number, required: true},
+      two: {type: Number, required: true},
+      tree: {type: Number, required: true},
+      four: {type: Number, required: true},
+      five: {type: Number, required: true},
+      six: {type: Number, required: true},
+    },
+  },
   note: {type: String, require: false, default: ""},
   lnsure: {type: String, require: false, default: ""}, //ประกัน
   update: {type: Array, required: false, default: []},
@@ -31,7 +40,14 @@ const validate = (data) => {
     pricture: Joi.string().default(""),
     hl: Joi.string().required(),
     description: Joi.string().required(),
-    price: Joi.array().default([]),
+    price: Joi.object({
+      one: Joi.number().required().label("กรอกราคาที่ 1"),
+      two: Joi.number().required().label("กรอกราคาที่ 2"),
+      tree: Joi.number().required().label("กรอกราคาที่ 3"),
+      four: Joi.number().required().label("กรอกราคาที่ 4"),
+      five: Joi.number().required().label("กรอกราคาที่ 5"),
+      six: Joi.number().required().label("กรอกราคาที่ 6"),
+    }),
     note: Joi.string().default(""),
     lnsure: Joi.string().default(""),
     update: Joi.array().default([]),
