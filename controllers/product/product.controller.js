@@ -83,22 +83,22 @@ exports.update = async (req, res) => {
     if (!req.body)
       return res.status(404).send({status: false, message: "ส่งข้อมูลผิดพลาด"});
     const id = req.params.id;
-    const data = {
-      pricture: req.body.pricture,
-      number: req.body.number,
-      status: req.body.status,
-      category_main: req.body.category_main,
-      category_second: req.body.category_second,
-      model: req.body.model,
-      hl: req.body.hl,
-      description: req.body.description,
-      note: req.body.note,
-      lnsure: req.body.lnsure,
-      link_spec: req.body.link_spec,
-      link_document: req.body.link_document,
-      link_img: req.body.link_img,
-    };
-    Products.findByIdAndUpdate(id, data, {
+    // const data = {
+    //   pricture: req.body.pricture,
+    //   number: req.body.number,
+    //   status: req.body.status,
+    //   category_main: req.body.category_main,
+    //   category_second: req.body.category_second,
+    //   model: req.body.model,
+    //   hl: req.body.hl,
+    //   description: req.body.description,
+    //   note: req.body.note,
+    //   lnsure: req.body.lnsure,
+    //   link_spec: req.body.link_spec,
+    //   link_document: req.body.link_document,
+    //   link_img: req.body.link_img,
+    // };
+    Products.findByIdAndUpdate(id, req.body, {
       useFindAndModify: false,
     })
       .then(async (item) => {
