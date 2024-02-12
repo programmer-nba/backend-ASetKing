@@ -84,6 +84,7 @@ exports.update = async (req, res) => {
       return res.status(404).send({status: false, message: "ส่งข้อมูลผิดพลาด"});
     const id = req.params.id;
     const data = {
+      pricture: req.body.pricture,
       number: req.body.number,
       status: req.body.status,
       category_main: req.body.category_main,
