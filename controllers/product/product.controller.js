@@ -199,6 +199,29 @@ exports.GetAllHistory = async (req, res) => {
   }
 };
 
+exports.GetHistoryID = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const history = await HistoryProducts.findOne({ _id: id });
+    if (history) {
+      return res.status(200).send({
+        status: true,
+        message: "ดึงข้อมูลประวัติการทำงานสำเร็จ",
+        data: history,
+      });
+    } else {
+      return res
+        .status(404)
+        .send({ message: "ดึงข้อมูลประวัติการทำงานไม่สำเร็จ", status: false });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: "มีบางอย่างผิดพลาด",
+      status: false,
+    });
+  }
+};
+
 const updateNumber = async (req, res) => {
   try {
     const product = await Products.find();

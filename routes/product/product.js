@@ -30,5 +30,6 @@ router.get("/price/:id", price_product.getPriceProduct);
 
 //get history
 router.get("/GetHistory/All",product.GetAllHistory)
+router.get("/GetHistoryBy/:id",product.GetHistoryID)
 
 module.exports = router;
