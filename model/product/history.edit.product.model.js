@@ -12,12 +12,12 @@ const HistoryProductSchema = new mongoose.Schema({
   description: { type: String, require: true },
   price: {
     type: {
-      one: { type: Number, required: true },
-      two: { type: Number, required: true },
-      tree: { type: Number, required: true },
-      four: { type: Number, required: true },
-      five: { type: Number, required: true },
-      six: { type: Number, required: true },
+      one: { type: Number, required: false },
+      two: { type: Number, required: false },
+      tree: { type: Number, required: false },
+      four: { type: Number, required: false },
+      five: { type: Number, required: false },
+      six: { type: Number, required: false },
     },
   },
   note: { type: String, require: false, default: "" },

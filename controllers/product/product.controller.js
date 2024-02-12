@@ -101,16 +101,33 @@ exports.update = async (req, res) => {
             .send({ status: false, message: "แก้ไขข้อมูลไม่สำเร็จ" });
 
         const updatedProduct = await Products.findOne({ _id: id });
-
         if (updatedProduct) {
-          const historyData = {
-            productId: id,
-            updatedData: updatedProduct,
-            updatedAt: new Date(),
-          };
-          const historyProduct = await HistoryProducts.create(historyData);
-          
-          console.log(historyData)
+          const historyData = new HistoryProducts({
+            number: item.number,
+            status: item.status,
+            category_main: item.category_main,
+            category_second: item.category_second,
+            model: item.model,
+            pricture: item.pricture,
+            hl: item.hl,
+            description: item.description,
+            price: {
+              one: item.price.one,
+              two: item.price.two,
+              tree: item.price.tree,
+              four: item.price.four,
+              five: item.price.five,
+              six: item.price.six,
+            },
+            note: item.note,
+            lnsure: item.lnsure,
+            update: item.update,
+            link_spec: item.link_spec,
+            link_document: item.link_document,
+            link_img: item.link_img,
+          });
+          const historyProduct = await historyData.save();
+          console.log(historyProduct);
 
           if (historyProduct) {
             return res.status(200).send({
