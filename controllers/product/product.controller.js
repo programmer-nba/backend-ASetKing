@@ -111,14 +111,6 @@ exports.update = async (req, res) => {
         .send({ status: false, message: "ส่งข้อมูลผิดพลาด" });
 
     const id = req.params.id;
-    let image = req.body.link_img;
-    (image = image.replace(`https://drive.google.com/file/d/`, "")),
-      (image = image.replace(`/view?usp=drive_link`, ""));
-
-    let description = req.body.description;
-    (description = description.replace(`<p>`, "")),
-      (description = description.replace(`</p>`, ""));
-
     Products.findByIdAndUpdate(
       id,
       { $set: req.body },
@@ -141,8 +133,8 @@ exports.update = async (req, res) => {
             category_main: item.category_main,
             category_second: item.category_second,
             model: item.model,
-            pricture: image,
-            description: description,
+            pricture: item.pricture,
+            description: item.description,
             hl: item.hl,
             description: item.description,
             price: {
