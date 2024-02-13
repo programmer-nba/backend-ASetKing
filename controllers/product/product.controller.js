@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
     //     .send({ message: error.details[0].message, status: false });
     let image = req.body.link_img;
     image = image.replace(`https://drive.google.com/file/d/`, "");
-    (image = image.replace(`/view?usp=drive_link`, ""));
+    image = image.replace(`/view?usp=drive_link`, "");
 
     let description = req.body.description;
     (description = description.replace(`<p>`, "")),
@@ -65,14 +65,25 @@ exports.create = async (req, res) => {
 
 exports.getProductAll = async (req, res) => {
   try {
-    const product = await Products.find();
-    if (!product)
+    const products = await Products.find();
+    if (!products)
       return res
         .status(404)
         .send({ status: false, message: "ดึงข้อมูลไม่สำเร็จ" });
+    const updatedProducts = products.map((product) => {
+      if (product.pricture) {
+        product.pricture = product.pricture.split("/view?usp=sharing")[0];
+      }
+      return product;
+    });
+
     return res
       .status(200)
-      .send({ status: true, message: "ดึงข้อมูลสำเร็จ", data: product });
+      .send({
+        status: true,
+        message: "ดึงข้อมูลสำเร็จ",
+        data: updatedProducts,
+      });
   } catch (err) {
     return res.status(500).send({ message: "Internal Server Error" });
   }
