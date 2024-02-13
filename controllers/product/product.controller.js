@@ -1,16 +1,19 @@
-const { Products, validate } = require("../../model/product/product.model");
+const { Products } = require("../../model/product/product.model");
 const { PriceProducts } = require("../../model/product/price.product.model");
 const {
   HistoryProducts,
 } = require("../../model/product/history.edit.product.model");
+const {
+  ProductsHistory,
+} = require("../../model/product/history.create.product.model");
 
 exports.create = async (req, res) => {
   try {
-    const { error } = validate(req.body);
-    if (error)
-      return res
-        .status(403)
-        .send({ message: error.details[0].message, status: false });
+    // const { error } = validate(req.body);
+    // if (error)
+    //   return res
+    //     .status(403)
+    //     .send({ message: error.details[0].message, status: false });
     let image = req.body.link_img;
     (image = image.replace(`https://drive.google.com/file/d/`, "")),
       (image = image.replace(`/view?usp=drive_link`, ""));
@@ -36,17 +39,26 @@ exports.create = async (req, res) => {
           pricture: image,
           description: description,
         }).save();
+
+        const productsHistory = await new ProductsHistory({
+          ...req.body,
+          pricture: image,
+          description: description,
+        });
+        const historyProduct = await productsHistory.save();
+
         return res.status(200).send({
           status: true,
           message: "เพิ่มสินค้าสำเร็จ",
           data: new_product,
+          history: historyProduct,
         });
       }
     } else {
       await updateNumber(req, res);
     }
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({ message: err.message });
   }
 };
 
