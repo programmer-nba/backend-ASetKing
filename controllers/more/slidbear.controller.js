@@ -34,8 +34,6 @@ exports.create = async (req, res) => {
       const admin = new Slidbear({
         profile_image: profile_image,
         func_type: req.body.func_type,
-        func_topic: req.body.func_topic,
-        func_name: req.body.func_name,
         func_detail: req.body.func_detail,
         func_discription: req.body.func_discription,
       });
