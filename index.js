@@ -32,6 +32,9 @@ app.use("/ASetKing/ip", require("./routes/more/ip"));
 // Function
 app.use("/ASetKing/function", require("./routes/more/function"));
 
+//Slide Bar
+app.use("/ASetKing/sliedbear", require("./routes/sliedbear/sliedbear"))
+
 // Delete Image
 app.use("/ASetKing/delete/image", require("./routes/more/deleteImage"));
 // UPLOAD FILE COLLECTION
