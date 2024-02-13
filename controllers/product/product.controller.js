@@ -135,14 +135,13 @@ exports.update = async (req, res) => {
         .send({ status: false, message: "ส่งข้อมูลผิดพลาด" });
 
     const id = req.params.id;
-    const ChckProduct = await Products.findOne({ number: req.body.number, _id: { $ne: id } });
-    if (ChckProduct) {
-      return res.status(400).send({
-        status: false,
-        message: "ไม่สามารถอัปเดตข้อมูล เนื่องจากมี number ที่ซ้ำกันแล้ว",
-      });
-    }
-
+    // const ChckProduct = await Products.findOne({ number: req.body.number, _id: { $ne: id } });
+    // if (ChckProduct) {
+    //   return res.status(400).send({
+    //     status: false,
+    //     message: "ไม่สามารถอัปเดตข้อมูล เนื่องจากมี number ที่ซ้ำกันแล้ว",
+    //   });
+    // }
     Products.findByIdAndUpdate(
       id,
       {
