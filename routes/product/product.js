@@ -31,6 +31,7 @@ router.get("/price/:id", price_product.getPriceProduct);
 //get history edit
 router.get("/GetHistory/All",product.GetAllHistory)
 router.get("/GetHistoryBy/:id",product.GetHistoryID)
+router.get("/GetHistoryByNumber/All/:number",product.GetHistoryByNumber)
 
 //get history create
 router.get("/GetHistoryCreate/All",product.GetAllHistoryCreate)

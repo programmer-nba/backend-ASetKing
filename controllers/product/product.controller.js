@@ -240,6 +240,29 @@ exports.GetHistoryID = async (req, res) => {
     });
   }
 };
+exports.GetHistoryByNumber = async (req, res) => {
+  try {
+    const number = req.params.number; 
+    const history = await HistoryProducts.find({ number: number });
+    console.log(history)
+    if (history) {
+      return res.status(200).send({
+        status: true,
+        message: "ดึงข้อมูลประวัติการทำงานสำเร็จ",
+        data: history,
+      });
+    } else {
+      return res
+        .status(404)
+        .send({ message: "ดึงข้อมูลประวัติการทำงานไม่สำเร็จ", status: false });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: "มีบางอย่างผิดพลาด",
+      status: false,
+    });
+  }
+};
 
 //ดึงประวัติการสร้างสินค้า
 exports.GetAllHistoryCreate = async (req, res) => {
