@@ -1,4 +1,5 @@
 const { Products } = require("../../model/product/product.model");
+const dayjs = require("dayjs");
 const { PriceProducts } = require("../../model/product/price.product.model");
 const {
   HistoryProducts,
@@ -200,9 +201,10 @@ exports.GetAllHistory = async (req, res) => {
         data: history,
       });
     } else {
-      return res
-        .status(404)
-        .send({ message: "ดึงข้อมูลประวัติการเเก้ไข้ข้อมูลสินค้าไมสำเร็จ", status: false });
+      return res.status(404).send({
+        message: "ดึงข้อมูลประวัติการเเก้ไข้ข้อมูลสินค้าไมสำเร็จ",
+        status: false,
+      });
     }
   } catch (error) {
     res.status(500).send({
@@ -245,9 +247,10 @@ exports.GetAllHistoryCreate = async (req, res) => {
         data: history,
       });
     } else {
-      return res
-        .status(404)
-        .send({ message: "ดึงข้อมูลประวัติการสร้างสินค้าไม่สำเร็จ", status: false });
+      return res.status(404).send({
+        message: "ดึงข้อมูลประวัติการสร้างสินค้าไม่สำเร็จ",
+        status: false,
+      });
     }
   } catch (error) {
     res.status(500).send({
@@ -267,15 +270,44 @@ exports.GetHistoryCreateID = async (req, res) => {
         data: history,
       });
     } else {
-      return res
-        .status(404)
-        .send({ message: "ดึงข้อมูลประวัติการสร้างสินค้าไม่สำเร็จ", status: false });
+      return res.status(404).send({
+        message: "ดึงข้อมูลประวัติการสร้างสินค้าไม่สำเร็จ",
+        status: false,
+      });
     }
   } catch (error) {
     res.status(500).send({
       message: "มีบางอย่างผิดพลาด",
       status: false,
     });
+  }
+};
+
+//เพิ่่มสถาณะ inactive
+exports.inactiveProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const updateStatus = await Products.findOneAndUpdate(
+      { _id: id },
+      { $set: { status: "inactive" } }, 
+      { new: true }
+    );
+
+    if (updateStatus) {
+      return res.status(200).send({
+        status: true,
+        message: "inactive success",
+        data: updateStatus,
+      });
+    } else {
+      return res.status(500).send({
+        message: "มีบางอย่างผิดพลาด",
+        status: false,
+      });
+    }
+  } catch (error) {
+    return res.status(500).send({ message: error.message, status: false });
   }
 };
 

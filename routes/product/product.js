@@ -36,5 +36,8 @@ router.get("/GetHistoryBy/:id",product.GetHistoryID)
 router.get("/GetHistoryCreate/All",product.GetAllHistoryCreate)
 router.get("/GetHistoryCreate/:id",product.GetHistoryCreateID)
 
+//put status inactive
+router.put("/inactiveProduct/:id",product.inactiveProduct)
+
 
 module.exports = router;
