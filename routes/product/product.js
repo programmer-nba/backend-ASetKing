@@ -40,6 +40,7 @@ router.get("/GetHistoryCreate/:id",product.GetHistoryCreateID)
 
 //put status inactive
 router.put("/inactiveProduct/:id",product.inactiveProduct)
+router.put("/actionProduct/:id",product.actionProduct)
 router.put("/DeleteProduct/By/:id",product.DeleteProduct)
 
 module.exports = router;

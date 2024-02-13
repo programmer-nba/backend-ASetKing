@@ -400,6 +400,32 @@ exports.inactiveProduct = async (req, res) => {
     return res.status(500).send({ message: error.message, status: false });
   }
 };
+exports.actionProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const updateStatus = await Products.findOneAndUpdate(
+      { _id: id },
+      { $set: { status: "action" } },
+      { new: true }
+    );
+
+    if (updateStatus) {
+      return res.status(200).send({
+        status: true,
+        message: "action success",
+        data: updateStatus,
+      });
+    } else {
+      return res.status(500).send({
+        message: "มีบางอย่างผิดพลาด",
+        status: false,
+      });
+    }
+  } catch (error) {
+    return res.status(500).send({ message: error.message, status: false });
+  }
+};
 exports.DeleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
