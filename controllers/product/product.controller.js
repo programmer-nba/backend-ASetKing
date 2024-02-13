@@ -142,6 +142,7 @@ exports.update = async (req, res) => {
             category_second: item.category_second,
             model: item.model,
             pricture: image,
+            description: description,
             hl: item.hl,
             description: item.description,
             price: {
