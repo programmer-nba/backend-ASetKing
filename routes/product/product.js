@@ -28,8 +28,13 @@ router.delete("/category/second/:id", category_second.delete);
 router.get("/price/:id", price_product.getPriceProduct);
 
 
-//get history
+//get history edit
 router.get("/GetHistory/All",product.GetAllHistory)
 router.get("/GetHistoryBy/:id",product.GetHistoryID)
+
+//get history create
+router.get("/GetHistoryCreate/All",product.GetAllHistoryCreate)
+router.get("/GetHistoryCreate/:id",product.GetHistoryCreateID)
+
 
 module.exports = router;

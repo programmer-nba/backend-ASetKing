@@ -189,19 +189,20 @@ exports.delete = async (req, res) => {
   }
 };
 
+//ดึงประวัติการเเก้ไขข้อมุลสินค้า
 exports.GetAllHistory = async (req, res) => {
   try {
     const history = await HistoryProducts.find();
     if (history.length > 0) {
       return res.status(200).send({
         status: true,
-        message: "ดึงข้อมูลประวัติการทำงานสำเร็จ",
+        message: "ดึงข้อมูลประวัติการเเก้ไข้ข้อมูลสินค้าสำเร็จ",
         data: history,
       });
     } else {
       return res
         .status(404)
-        .send({ message: "ดึงข้อมูลประวัติการทำงานไม่สำเร็จ", status: false });
+        .send({ message: "ดึงข้อมูลประวัติการเเก้ไข้ข้อมูลสินค้าไมสำเร็จ", status: false });
     }
   } catch (error) {
     res.status(500).send({
@@ -210,7 +211,6 @@ exports.GetAllHistory = async (req, res) => {
     });
   }
 };
-
 exports.GetHistoryID = async (req, res) => {
   try {
     const id = req.params.id;
@@ -225,6 +225,51 @@ exports.GetHistoryID = async (req, res) => {
       return res
         .status(404)
         .send({ message: "ดึงข้อมูลประวัติการทำงานไม่สำเร็จ", status: false });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: "มีบางอย่างผิดพลาด",
+      status: false,
+    });
+  }
+};
+
+//ดึงประวัติการสร้างสินค้า
+exports.GetAllHistoryCreate = async (req, res) => {
+  try {
+    const history = await ProductsHistory.find();
+    if (history.length > 0) {
+      return res.status(200).send({
+        status: true,
+        message: "ดึงข้อมูลประวัติการสร้างสินค้าสำเร็จ",
+        data: history,
+      });
+    } else {
+      return res
+        .status(404)
+        .send({ message: "ดึงข้อมูลประวัติการสร้างสินค้าไม่สำเร็จ", status: false });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      status: false,
+    });
+  }
+};
+exports.GetHistoryCreateID = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const history = await ProductsHistory.findOne({ _id: id });
+    if (history) {
+      return res.status(200).send({
+        status: true,
+        message: "ดึงข้อมูลประวัติการสร้างสินค้าสำเร็จ",
+        data: history,
+      });
+    } else {
+      return res
+        .status(404)
+        .send({ message: "ดึงข้อมูลประวัติการสร้างสินค้าไม่สำเร็จ", status: false });
     }
   } catch (error) {
     res.status(500).send({
