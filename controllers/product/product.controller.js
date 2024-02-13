@@ -113,24 +113,24 @@ exports.update = async (req, res) => {
     const id = req.params.id;
     Products.findByIdAndUpdate(id, {
             
-            // price: {
-            //   one: req.body.price.one,
-            //   two: req.body.price.two,
-            //   tree: req.body.price.tree,
-            //   four: req.body.price.four,
-            //   five: req.body.price.five,
-            //   six: req.body.price.six,
-            // },
-            // hl:req.body.hl,
-            // note:req.body.note,
-            // lnsure:req.body.lnsure,
-            // description:req.body.description,
+            price: {
+              one: req.body.price.one,
+              two: req.body.price.two,
+              tree: req.body.price.tree,
+              four: req.body.price.four,
+              five: req.body.price.five,
+              six: req.body.price.six,
+            },
+            hl:req.body.hl,
+            note:req.body.note,
+            lnsure:req.body.lnsure,
+            description:req.body.description,
             pricture:req.body.pricture,
             link_img:"https://drive.google.com/file/d/"+req.body.pricture+"/view?usp=sharing",
-            // update:{
-            //   name:req.body.update.name,
-            //   timestamp:req.body.update.timestamp,
-            // }
+            update:{
+              name:req.body.update.name,
+              timestamp:req.body.update.timestamp,
+            }
 
     }, {
       useFindAndModify: false,
