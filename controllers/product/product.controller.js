@@ -77,13 +77,11 @@ exports.getProductAll = async (req, res) => {
       return product;
     });
 
-    return res
-      .status(200)
-      .send({
-        status: true,
-        message: "ดึงข้อมูลสำเร็จ",
-        data: updatedProducts,
-      });
+    return res.status(200).send({
+      status: true,
+      message: "ดึงข้อมูลสำเร็จ",
+      data: updatedProducts,
+    });
   } catch (err) {
     return res.status(500).send({ message: "Internal Server Error" });
   }
@@ -188,7 +186,7 @@ exports.update = async (req, res) => {
           .send({ status: false, message: err.message + id });
       });
   } catch (err) {
-    return res.status(500).send({ message: "Internal Server Error" });
+    return res.status(500).send({ message: err.message });
   }
 };
 
