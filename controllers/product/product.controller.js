@@ -111,14 +111,30 @@ exports.update = async (req, res) => {
         .send({ status: false, message: "ส่งข้อมูลผิดพลาด" });
 
     const id = req.params.id;
-    Products.findByIdAndUpdate(
-      id,
-      { $set: req.body },
-      {
-        useFindAndModify: false,
-        new: true,
-      }
-    )
+    Products.findByIdAndUpdate(id, {
+            
+            price: {
+              one: req.body.price.one,
+              two: req.body.price.two,
+              tree: req.body.price.tree,
+              four: req.body.price.four,
+              five: req.body.price.five,
+              six: req.body.price.six,
+            },
+            hl:req.body.hl,
+            note:req.body.note,
+            lnsure:req.body.lnsure,
+            description:req.body.description,
+            link_img:req.body.pricture,
+            update:{
+              name:req.body.update.name,
+              timestamp:req.body.update.timestamp,
+            }
+
+    }, {
+      useFindAndModify: false,
+      new: true,
+    })
       .then(async (item) => {
         if (!item)
           return res
