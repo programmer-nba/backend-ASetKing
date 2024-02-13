@@ -103,9 +103,14 @@ exports.update = async (req, res) => {
 
     const id = req.params.id;
 
-    Products.findByIdAndUpdate(id, req.body, {
-      useFindAndModify: false,
-    })
+    Products.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      {
+        useFindAndModify: false,
+        new: true
+      }
+    )
       .then(async (item) => {
         if (!item)
           return res
@@ -290,7 +295,7 @@ exports.inactiveProduct = async (req, res) => {
 
     const updateStatus = await Products.findOneAndUpdate(
       { _id: id },
-      { $set: { status: "inactive" } }, 
+      { $set: { status: "inactive" } },
       { new: true }
     );
 
