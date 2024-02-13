@@ -139,10 +139,11 @@ exports.update = async (req, res) => {
             note: item.note,
             lnsure: item.lnsure,
             update: item.update,
-            link_spec: item.link_spec,
-            link_document: item.link_document,
-            link_img: item.link_img,
+            // link_spec: item.link_spec,
+            // link_document: item.link_document,
+            // link_img: item.link_img,
           });
+          historyData.update.push(req.body.update);
           const historyProduct = await historyData.save();
           if (historyProduct) {
             return res.status(200).send({
