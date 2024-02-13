@@ -65,7 +65,7 @@ exports.create = async (req, res) => {
 
 exports.getProductAll = async (req, res) => {
   try {
-    const products = await Products.find();
+    const products = await Products.find({ status: { $ne: 'ลบสินค้า' } });
     if (!products)
       return res
         .status(404)
@@ -84,6 +84,30 @@ exports.getProductAll = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+exports.getProductAllByName = async (req, res) => {
+  try {
+    const history = await Products.find({ status: "ลบสินค้า" });
+
+    if (history.length > 0) {
+      return res.status(200).send({
+        status: true,
+        message: "ดึงข้อมูลประวัติการแก้ไขข้อมูลสินค้าสำเร็จ",
+        data: history,
+      });
+    } else {
+      return res.status(404).send({
+        message: "ไม่พบข้อมูลประวัติการแก้ไขข้อมูลสินค้า",
+        status: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      status: false,
+    });
   }
 };
 
@@ -111,31 +135,36 @@ exports.update = async (req, res) => {
         .send({ status: false, message: "ส่งข้อมูลผิดพลาด" });
 
     const id = req.params.id;
-    Products.findByIdAndUpdate(id, {
-            
-            price: {
-              one: req.body.price.one,
-              two: req.body.price.two,
-              tree: req.body.price.tree,
-              four: req.body.price.four,
-              five: req.body.price.five,
-              six: req.body.price.six,
-            },
-            hl:req.body.hl,
-            note:req.body.note,
-            lnsure:req.body.lnsure,
-            description:req.body.description,
-            pricture:req.body.pricture,
-            link_img:"https://drive.google.com/file/d/"+req.body.pricture+"/view?usp=sharing",
-            update:{
-              name:req.body.update.name,
-              timestamp:req.body.update.timestamp,
-            }
-
-    }, {
-      useFindAndModify: false,
-      new: true,
-    })
+    Products.findByIdAndUpdate(
+      id,
+      {
+        price: {
+          one: req.body.price.one,
+          two: req.body.price.two,
+          tree: req.body.price.tree,
+          four: req.body.price.four,
+          five: req.body.price.five,
+          six: req.body.price.six,
+        },
+        hl: req.body.hl,
+        note: req.body.note,
+        lnsure: req.body.lnsure,
+        description: req.body.description,
+        pricture: req.body.pricture,
+        link_img:
+          "https://drive.google.com/file/d/" +
+          req.body.pricture +
+          "/view?usp=sharing",
+        update: {
+          name: req.body.update.name,
+          timestamp: req.body.update.timestamp,
+        },
+      },
+      {
+        useFindAndModify: false,
+        new: true,
+      }
+    )
       .then(async (item) => {
         if (!item)
           return res
@@ -353,6 +382,32 @@ exports.inactiveProduct = async (req, res) => {
       return res.status(200).send({
         status: true,
         message: "inactive success",
+        data: updateStatus,
+      });
+    } else {
+      return res.status(500).send({
+        message: "มีบางอย่างผิดพลาด",
+        status: false,
+      });
+    }
+  } catch (error) {
+    return res.status(500).send({ message: error.message, status: false });
+  }
+};
+exports.DeleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const updateStatus = await Products.findOneAndUpdate(
+      { _id: id },
+      { $set: { status: "ลบสินค้า" } },
+      { new: true }
+    );
+
+    if (updateStatus) {
+      return res.status(200).send({
+        status: true,
+        message: "ลบสินค้าสำเร็จ",
         data: updateStatus,
       });
     } else {

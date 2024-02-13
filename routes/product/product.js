@@ -6,6 +6,7 @@ const price_product = require("../../controllers/product/price.controller");
 
 router.post("/", product.create);
 router.get("/all", product.getProductAll);
+router.get("/getProductAllByName", product.getProductAllByName)
 router.get("/:id", product.getProductById);
 router.put("/:id", product.update);
 router.delete("/:id", product.delete);
@@ -39,6 +40,6 @@ router.get("/GetHistoryCreate/:id",product.GetHistoryCreateID)
 
 //put status inactive
 router.put("/inactiveProduct/:id",product.inactiveProduct)
-
+router.put("/DeleteProduct/By/:id",product.DeleteProduct)
 
 module.exports = router;
