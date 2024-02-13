@@ -48,3 +48,18 @@ exports.create = async (req, res) => {
     return res.status(500).send({ status: false, error: error.message });
   }
 };
+
+exports.getAll = async (req, res) => {
+    try {
+      const function_more = await Slidbear.find();
+      if (function_more) {
+        return res.status(200).send({status: true, data: function_more});
+      } else {
+        return res
+          .status(400)
+          .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
+      }
+    } catch (err) {
+      return res.status(500).send({message: "มีบางอย่างผิดพลาด"});
+    }
+  };
