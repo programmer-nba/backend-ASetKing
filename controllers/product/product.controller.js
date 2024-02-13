@@ -125,7 +125,8 @@ exports.update = async (req, res) => {
             note:req.body.note,
             lnsure:req.body.lnsure,
             description:req.body.description,
-            link_img:req.body.pricture,
+            pricture:req.body.pricture,
+            link_img:+"https://drive.google.com/file/d/"+req.body.pricture+"/view…",
             update:{
               name:req.body.update.name,
               timestamp:req.body.update.timestamp,
