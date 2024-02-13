@@ -102,13 +102,20 @@ exports.update = async (req, res) => {
         .send({ status: false, message: "ส่งข้อมูลผิดพลาด" });
 
     const id = req.params.id;
+    let image = req.body.link_img;
+    (image = image.replace(`https://drive.google.com/file/d/`, "")),
+      (image = image.replace(`/view?usp=drive_link`, ""));
+
+    let description = req.body.description;
+    (description = description.replace(`<p>`, "")),
+      (description = description.replace(`</p>`, ""));
 
     Products.findByIdAndUpdate(
       id,
       { $set: req.body },
       {
         useFindAndModify: false,
-        new: true
+        new: true,
       }
     )
       .then(async (item) => {
@@ -125,7 +132,7 @@ exports.update = async (req, res) => {
             category_main: item.category_main,
             category_second: item.category_second,
             model: item.model,
-            pricture: item.pricture,
+            pricture: image,
             hl: item.hl,
             description: item.description,
             price: {
@@ -139,9 +146,9 @@ exports.update = async (req, res) => {
             note: item.note,
             lnsure: item.lnsure,
             update: item.update,
-            // link_spec: item.link_spec,
-            // link_document: item.link_document,
-            // link_img: item.link_img,
+            link_spec: item.link_spec,
+            link_document: item.link_document,
+            link_img: item.link_img,
           });
           historyData.update.push(req.body.update);
           const historyProduct = await historyData.save();
@@ -243,9 +250,9 @@ exports.GetHistoryID = async (req, res) => {
 };
 exports.GetHistoryByNumber = async (req, res) => {
   try {
-    const number = req.params.number; 
+    const number = req.params.number;
     const history = await HistoryProducts.find({ number: number });
-    console.log(history)
+    console.log(history);
     if (history) {
       return res.status(200).send({
         status: true,
