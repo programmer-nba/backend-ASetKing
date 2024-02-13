@@ -16,8 +16,8 @@ exports.create = async (req, res) => {
     //     .status(403)
     //     .send({ message: error.details[0].message, status: false });
     let image = req.body.link_img;
-    (image = image.replace(`https://drive.google.com/file/d/`, "")),
-      (image = image.replace(`/view?usp=drive_link`, ""));
+    (image = image.replace(`https://drive.google.com/file/d/`, ""))
+      // (image = image.replace(`/view?usp=drive_link`, ""));
 
     let description = req.body.description;
     (description = description.replace(`<p>`, "")),
