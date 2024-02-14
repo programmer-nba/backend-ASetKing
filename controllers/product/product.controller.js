@@ -124,9 +124,9 @@ exports.getProductLatest = async (req, res) => {
         },
       },
     ]);
-  
+
     const formattedData = latestHistory.map((item) => item.latestItem);
-  
+
     return res.status(200).send({
       status: true,
       message: "ดึงข้อมูลประวัติการแก้ไขข้อมูลสินค้าสำเร็จ",
