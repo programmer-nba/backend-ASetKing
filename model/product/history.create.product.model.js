@@ -26,10 +26,12 @@ const ProductCreateHisSchema = new mongoose.Schema({
   link_spec: { type: String, require: false, default: "" },
   link_document: { type: String, require: false, default: "" },
   link_img: { type: String, require: false, default: "" },
-  update: [{
-    name:{ type: String, require: false, default: "" },
-    timestamps: { type: Date, required: false, default: Date.now() },
-  }],
+  update: [
+    {
+      name: { type: String, require: false, default: "" },
+      timestamps: { type: Date, required: false, default: Date.now() },
+    },
+  ],
 });
 
 const ProductsHistory = mongoose.model(
