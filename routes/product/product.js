@@ -6,7 +6,8 @@ const price_product = require("../../controllers/product/price.controller");
 
 router.post("/", product.create);
 router.get("/all", product.getProductAll);
-router.get("/getProductAllByName", product.getProductAllByName)
+router.get("/getProductAllByName", product.getProductAllByName);
+router.get("/getProductLatest", product.getProductLatest)
 router.get("/:id", product.getProductById);
 router.put("/:id", product.update);
 router.delete("/:id", product.delete);
@@ -28,19 +29,18 @@ router.delete("/category/second/:id", category_second.delete);
 // Price Product
 router.get("/price/:id", price_product.getPriceProduct);
 
-
 //get history edit
-router.get("/GetHistory/All",product.GetAllHistory)
-router.get("/GetHistoryBy/:id",product.GetHistoryID)
-router.get("/GetHistoryByNumber/All/:number",product.GetHistoryByNumber)
+router.get("/GetHistory/All", product.GetAllHistory);
+router.get("/GetHistoryBy/:id", product.GetHistoryID);
+router.get("/GetHistoryByNumber/All/:number", product.GetHistoryByNumber);
 
 //get history create
-router.get("/GetHistoryCreate/All",product.GetAllHistoryCreate)
-router.get("/GetHistoryCreate/:id",product.GetHistoryCreateID)
+router.get("/GetHistoryCreate/All", product.GetAllHistoryCreate);
+router.get("/GetHistoryCreate/:id", product.GetHistoryCreateID);
 
 //put status inactive
-router.put("/inactiveProduct/:id",product.inactiveProduct)
-router.put("/actionProduct/:id",product.actionProduct)
-router.put("/DeleteProduct/By/:id",product.DeleteProduct)
+router.put("/inactiveProduct/:id", product.inactiveProduct);
+router.put("/actionProduct/:id", product.actionProduct);
+router.put("/DeleteProduct/By/:id", product.DeleteProduct);
 
 module.exports = router;

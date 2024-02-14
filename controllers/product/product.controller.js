@@ -111,6 +111,40 @@ exports.getProductAllByName = async (req, res) => {
   }
 };
 
+exports.getProductLatest = async (req, res) => {
+  try {
+    const { number } = req.body;
+
+    if (!number) {
+      return res.status(400).send({
+        message: "กรุณาระบุรหัสสินค้าที่ต้องการค้นหา",
+        status: false,
+      });
+    }
+    const history = await HistoryProducts.find({ number })
+      .sort({ "update.timestamp": -1 })
+      .limit(1);
+
+    if (history && history.length > 0) {
+      return res.status(200).send({
+        status: true,
+        message: "ดึงข้อมูลประวัติการแก้ไขข้อมูลสินค้าสำเร็จ",
+        data: history[0], // เลือกข้อมูลล่าสุด
+      });
+    } else {
+      return res.status(404).send({
+        message: "ไม่พบข้อมูลประวัติการแก้ไขข้อมูลสินค้า",
+        status: false,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      status: false,
+    });
+  }
+};
+
 exports.getProductById = async (req, res) => {
   try {
     const id = req.params.id;
@@ -135,7 +169,10 @@ exports.update = async (req, res) => {
         .send({ status: false, message: "ส่งข้อมูลผิดพลาด" });
 
     const id = req.params.id;
-    const ChckProduct = await Products.findOne({ number: req.body.number, _id: { $ne: id } });
+    const ChckProduct = await Products.findOne({
+      number: req.body.number,
+      _id: { $ne: id },
+    });
     if (ChckProduct) {
       return res.status(400).send({
         status: false,
