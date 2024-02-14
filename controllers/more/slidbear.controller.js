@@ -94,13 +94,31 @@ exports.EditSliBear = async (req, res) => {
         const new_passwordadmin = await Slidbear.findByIdAndUpdate(id, {
           ...req.body,
         });
-       
       }
       return res
-      .status(200)
-      .send({ message: "เเก้ไขข้อมุลสำเร็จ", status: true });
+        .status(200)
+        .send({ message: "เเก้ไขข้อมุลสำเร็จ", status: true });
     });
   } catch (error) {
     return res.status(500).send({ status: false, error: error.message });
+  }
+};
+exports.deleteSliBear = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const slidbear = await Slidbear.findByIdAndDelete(id);
+    if (!slidbear) {
+      return res
+        .status(404)
+        .send({ status: false, message: "ไม่พบข้อมูลรูปภาพ" });
+    } else {
+      return res
+        .status(200)
+        .send({ status: true, message: "ลบข้อมูลรูปภาพสำเร็จ" });
+    }
+  } catch (err) {
+    return res
+      .status(500)
+      .send({ status: false, message: "มีบางอย่างผิดพลาด" });
   }
 };
