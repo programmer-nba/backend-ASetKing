@@ -1,6 +1,7 @@
 const { IPAddress, validate } = require("../../model/more/ip.model");
 const getmac = require("getmac");
 const MacAddress = getmac.default();
+const axios = require("axios");
 
 exports.create = async (req, res) => {
   try {
@@ -132,6 +133,20 @@ exports.delete = async (req, res) => {
 exports.getMacAddress = async (req, res) => {
   try {
     return res.status(200).send({ status: true, message: MacAddress });
+  } catch (err) {
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+exports.getIPWeb = async (req, res) => {
+  try {
+    const config = {
+      method: "get",
+      headers: {},
+      url: `https://api64.ipify.org?format=json`,
+    };
+    const response = await axios(config);
+    return res.status(200).send({ status: true, message: response.data });
   } catch (err) {
     return res.status(500).send({ message: "Internal Server Error" });
   }

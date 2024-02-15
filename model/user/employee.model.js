@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 const getmac = require("getmac");
-const IPAddress = getmac.default();
 
 const complexityOptions = {
   min: 6,
@@ -31,7 +30,6 @@ EmployeeSchema.methods.generateAuthToken = function () {
       name: this.name,
       position: this.position,
       row: "employee",
-      macAddress: IPAddress,
     },
     process.env.JWTPRIVATEKEY,
     {expiresIn: "4h"}
