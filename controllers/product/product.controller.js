@@ -10,11 +10,6 @@ const {
 
 exports.create = async (req, res) => {
   try {
-    // const { error } = validate(req.body);
-    // if (error)
-    //   return res
-    //     .status(403)
-    //     .send({ message: error.details[0].message, status: false });
     let image = req.body.link_img;
     image = image.replace(`https://drive.google.com/file/d/`, "");
     image = image.replace(`/view?usp=drive_link`, "");
@@ -23,41 +18,34 @@ exports.create = async (req, res) => {
     (description = description.replace(`<p>`, "")),
       (description = description.replace(`</p>`, ""));
 
-    const number_product = await Products.findOne({
-      number: req.body.number,
-    });
-    if (!number_product) {
-      const product = await Products.findOne({
-        model: req.body.model,
+    const existingProduct = await Products.findOne({ number: req.body.number });
+
+    if (existingProduct) {
+      return res.status(401).send({
+        status: false,
+        message: "มีสินค้านี้ในระบบแล้ว",
       });
-      if (product) {
-        return res
-          .status(401)
-          .send({ status: false, message: "มีสินค้านี้ในระบบแล้ว" });
-      } else {
-        const new_product = await new Products({
-          ...req.body,
-          pricture: image,
-          description: description,
-        }).save();
-
-        const productsHistory = await new ProductsHistory({
-          ...req.body,
-          pricture: image,
-          description: description,
-        });
-        const historyProduct = await productsHistory.save();
-
-        return res.status(200).send({
-          status: true,
-          message: "เพิ่มสินค้าสำเร็จ",
-          data: new_product,
-          history: historyProduct,
-        });
-      }
-    } else {
-      await updateNumber(req, res);
     }
+
+    const new_product = await new Products({
+      ...req.body,
+      picture: image, 
+      description: description,
+    }).save();
+
+    const productsHistory = await new ProductsHistory({
+      ...req.body,
+      picture: image,
+      description: description,
+    });
+    const historyProduct = await productsHistory.save();
+
+    return res.status(200).send({
+      status: true,
+      message: "เพิ่มสินค้าสำเร็จ",
+      data: new_product,
+      history: historyProduct,
+    });
   } catch (err) {
     return res.status(500).send({ message: err.message });
   }
@@ -484,9 +472,6 @@ exports.DeleteProduct = async (req, res) => {
     return res.status(500).send({ message: error.message, status: false });
   }
 };
-
-
-
 
 const updateNumber = async (req, res) => {
   try {
