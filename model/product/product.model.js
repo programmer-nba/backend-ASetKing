@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const ProductSchema = new mongoose.Schema({
-  number: {type: Number, required: true},
+  number: {type: String, required: true},
   status: {type: String, required: false, default: ""},
   category_main: {type: String, require: true},
   category_second: {type: String, require: false, default: ""},
