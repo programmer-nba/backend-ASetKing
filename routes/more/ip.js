@@ -10,4 +10,8 @@ router.delete("/:id", ip_address.delete);
 
 router.post("/getMacAddress", ip_address.getMacAddress);
 
+
+router.post("/getipAddres", ip_address.getIPWeb);
+
+
 module.exports = router;
