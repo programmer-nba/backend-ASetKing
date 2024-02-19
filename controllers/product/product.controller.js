@@ -18,18 +18,16 @@ exports.create = async (req, res) => {
     (description = description.replace(`<p>`, "")),
       (description = description.replace(`</p>`, ""));
 
-    const existingProduct = await Products.findOne({ number: req.body.number });
-
+    const existingProduct = await Products.findOne({ number: req.body.number ,status : "action" });
     if (existingProduct) {
       return res.status(401).send({
         status: false,
         message: "มีสินค้านี้ในระบบแล้ว",
       });
     }
-
     const new_product = await new Products({
       ...req.body,
-      picture: image, 
+      picture: image,
       description: description,
     }).save();
 
