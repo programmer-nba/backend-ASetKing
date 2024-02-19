@@ -18,7 +18,10 @@ exports.create = async (req, res) => {
     (description = description.replace(`<p>`, "")),
       (description = description.replace(`</p>`, ""));
 
-    const existingProduct = await Products.findOne({ number: req.body.number ,status : "action" });
+    const existingProduct = await Products.findOne({
+      number: req.body.number,
+      status: "action",
+    });
     if (existingProduct) {
       return res.status(401).send({
         status: false,
@@ -27,13 +30,13 @@ exports.create = async (req, res) => {
     }
     const new_product = await new Products({
       ...req.body,
-      picture: image,
+      pricture: image,
       description: description,
     }).save();
 
     const productsHistory = await new ProductsHistory({
       ...req.body,
-      picture: image,
+      pricture: image,
       description: description,
     });
     const historyProduct = await productsHistory.save();
