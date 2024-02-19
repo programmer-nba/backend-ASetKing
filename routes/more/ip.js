@@ -8,6 +8,6 @@ router.get("/:id", ip_address.getIPAddressById);
 router.put("/:id", ip_address.update);
 router.delete("/:id", ip_address.delete);
 
-router.post("/getMacAddress", ip_address.getMacAddress)
+router.post("/getMacAddress", ip_address.getMacAddress);
 
 module.exports = router;

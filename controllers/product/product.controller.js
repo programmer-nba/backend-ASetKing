@@ -485,6 +485,9 @@ exports.DeleteProduct = async (req, res) => {
   }
 };
 
+
+
+
 const updateNumber = async (req, res) => {
   try {
     const product = await Products.find();
