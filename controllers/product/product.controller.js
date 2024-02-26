@@ -20,7 +20,7 @@ exports.create = async (req, res) => {
 
     const existingProduct = await Products.findOne({
       number: req.body.number,
-      status: "action",
+      status: "active",
     });
     if (existingProduct) {
       return res.status(401).send({
@@ -427,14 +427,14 @@ exports.actionProduct = async (req, res) => {
 
     const updateStatus = await Products.findOneAndUpdate(
       { _id: id },
-      { $set: { status: "action" } },
+      { $set: { status: "active" } },
       { new: true }
     );
 
     if (updateStatus) {
       return res.status(200).send({
         status: true,
-        message: "action success",
+        message: "active success",
         data: updateStatus,
       });
     } else {
