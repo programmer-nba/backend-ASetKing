@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
   try {
     let image = req.body.link_img;
     image = image.replace(`https://drive.google.com/file/d/`, "");
-    image = image.replace(`/view?usp=drive_link`, "");
+    image = image.replace(`/view?usp=sharing`, "");
 
     let description = req.body.description;
     (description = description.replace(`<p>`, "")),
