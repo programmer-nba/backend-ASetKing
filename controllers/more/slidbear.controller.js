@@ -11,6 +11,7 @@ const {
   deleteFile,
 } = require("../../funtions/uploadfilecreate");
 const { admin } = require("googleapis/build/src/apis/admin");
+const dayjs = require("dayjs");
 
 exports.create = async (req, res) => {
   try {
@@ -36,6 +37,7 @@ exports.create = async (req, res) => {
         func_type: req.body.func_type,
         func_detail: req.body.func_detail,
         func_discription: req.body.func_discription,
+        timestamp: dayjs(Date.now()).format(""),
       });
       const add = await admin.save();
       return res.status(200).send({
