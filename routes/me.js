@@ -29,6 +29,15 @@ router.post("/", auth, async (req, res) => {
             username: item.username,
             level: "employee",
             position: item.position,
+            price: {
+              two: item.price.two,
+              tree: item.price.tree,
+              four: item.price.four,
+              five: item.price.five,
+              six: item.price.six
+          },
+          slidbeargeneral: item.slidbeargeneral,
+          slidbearproduct: item.slidbearproduct
           });
         })
         .catch(() => {

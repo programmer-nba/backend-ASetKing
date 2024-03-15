@@ -16,14 +16,48 @@ exports.create = async (req, res) => {
         .send({status: false, message: "มีผู้ใช้งานนี้ในระบบแล้ว"});
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    await new Employees({
-      ...req.body,
-      password: hashPassword,
-      date_start: Date.now(),
-    }).save();
-    return res
-      .status(200)
-      .send({status: true, message: "เพิ่มผู้ใช้งานสำเร็จ"});
+
+    if(req.body.position =="Owner"){
+      await new Employees({
+        ...req.body,
+        password: hashPassword,
+        date_start: Date.now(),
+        slidbeargeneral:true,
+        slidbearproduct:true,
+        price:{
+          two:true,
+          tree:true,
+          four:true,
+          five:true,
+          six:true
+        }
+      }).save();
+      return res
+        .status(200)
+        .send({status: true, message: "เพิ่มผู้ใช้งานสำเร็จ"});
+    
+    } else if(req.body.position =="Manager"){
+      await new Employees({
+        ...req.body,
+        password: hashPassword,
+        date_start: Date.now(),
+      }).save();
+      return res
+        .status(200)
+        .send({status: true, message: "เพิ่มผู้ใช้งานสำเร็จ"});
+    
+    }else {
+      await new Employees({
+        ...req.body,
+        password: hashPassword,
+        date_start: Date.now(),
+      }).save();
+      return res
+        .status(200)
+        .send({status: true, message: "เพิ่มผู้ใช้งานสำเร็จ"});
+    }
+
+   
   } catch (err) {
     return res.status(500).send({message: "Internal Server Error"});
   }
@@ -32,7 +66,7 @@ exports.create = async (req, res) => {
 exports.getEmployeeAll = async (req, res) => {
   try {
     const employee = await Employees.find();
-    if (!employee)
+    if (!employee) 
       return res
         .status(404)
         .send({status: false, message: "ดึงข้อมูลไม่สำเร็จ"});
@@ -66,6 +100,7 @@ exports.update = async (req, res) => {
       return res.status(404).send({status: false, message: "ส่งข้อมูลผิดพลาด"});
     const id = req.params.id;
     if (!req.body.password) {
+      
       Employees.findByIdAndUpdate(id, req.body, {useFindAndModify: false})
         .then((item) => {
           if (!item)
