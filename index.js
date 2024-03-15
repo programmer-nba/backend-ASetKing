@@ -40,5 +40,11 @@ app.use("/ASetKing/delete/image", require("./routes/more/deleteImage"));
 // UPLOAD FILE COLLECTION
 app.use("/ASetKing/image/collection", require("./routes/more/uploadfile"));
 
+
+// ประเภทย่อยสประกาศย่อยทั่วไป
+app.use("/ASetKing/subslidbeargeneral", require("./routes/subslidbear/subslidbeargeneral"));
+// ประเภทประกาศย่อยสินค้า
+app.use("/ASetKing/subslidbearproduct", require("./routes/subslidbear/subslidbearproduct"));
+
 const port = process.env.PORT || 1234;
 app.listen(port, console.log(`Listening on port ${port}`));

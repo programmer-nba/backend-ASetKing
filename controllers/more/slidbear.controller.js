@@ -36,6 +36,8 @@ exports.create = async (req, res) => {
         profile_image: profile_image,
         func_type: req.body.func_type,
         func_detail: req.body.func_detail,
+        type: req.body.type,
+        subtype: req.body.subtype,
         func_discription: req.body.func_discription,
         timestamp: dayjs(Date.now()).format(""),
       });
@@ -65,6 +67,32 @@ exports.getAll = async (req, res) => {
     return res.status(500).send({ message: "มีบางอย่างผิดพลาด" });
   }
 };
+
+exports.getBysubgen = async (req, res) => {
+  try {
+    const subslidbear = await Slidbear.find({ type: "ประกาศทั่วไป" });
+    if (subslidbear) {
+      return res.status(200).send({ status: true, data: subslidbear });
+    } else {
+      return res.status(400).send({ status: false, message: "ดึงข้อมูลไม่สำเร็จ" });
+    }
+  } catch (error) {
+    return res.status(500).send({ status: false, error: error.message });
+  }
+}
+
+exports.getByproduct = async (req, res) => {
+  try {
+    const subslidbear = await Slidbear.find({ type: "ประกาศสินค้า" });
+    if (subslidbear) {
+      return res.status(200).send({ status: true, data: subslidbear });
+    } else {
+      return res.status(400).send({ status: false, message: "ดึงข้อมูลไม่สำเร็จ" });
+    }
+  } catch (error) {
+    return res.status(500).send({ status: false, error: error.message });
+  }
+}
 
 exports.EditSliBear = async (req, res) => {
   try {

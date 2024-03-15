@@ -20,6 +20,15 @@ const EmployeeSchema = new mongoose.Schema({
   password: {type: String, required: true},
   position: {type: String, required: true},
   date_start: {type: Date, required: false, default: Date.now()},
+  slidbeargeneral: {type: Boolean, required: false},
+  slidbearproduct: {type: Boolean, required: false},
+  price:{type:{
+    two:{type:Boolean,default:false},
+    tree:{type:Boolean,default:false},
+    four:{type:Boolean,default:false},
+    five:{type:Boolean,default:false},
+    six:{type:Boolean,default:false},  
+  },default:null},
   // level: {type: String, required: true},
 });
 
