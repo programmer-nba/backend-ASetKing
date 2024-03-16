@@ -14,4 +14,7 @@ router.put("/:id", subslidbeargeneral.updategen);
 //ลบข้อมูลประเภทย่อย
 router.delete("/:id", subslidbeargeneral.delete);
 
+
+router.get('/getall',subslidbeargeneral.getAll)
+
 module.exports = router;
