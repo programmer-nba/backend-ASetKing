@@ -1,5 +1,19 @@
 const { Subslidbear } = require('../../model/more/subslidbear.model');
 
+//getall
+exports.getAll = async (req, res) => {
+    try {
+        const subslidbear = await Subslidbear.find();
+        if (subslidbear) {
+            return res.status(200).send({ status: true, data: subslidbear });
+        } else {
+            return res.status(400).send({ status: false, message: "ดึงข้อมูลไม่สำเร็จ" });
+        }
+    } catch (error) {
+        return res.status(500).send({ status: false, error: error.message });
+    }
+}
+
 
 //เพิ่มข้อมูลประเภทย่อยทั่วไป
 exports.creategen = async (req, res) => {
