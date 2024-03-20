@@ -12,12 +12,12 @@ const ProductSchema = new mongoose.Schema({
   description: { type: String, require: true },
   price: {
     type: {
-      one: { type: Number, required: true },
-      two: { type: Number, required: true },
-      tree: { type: Number, required: true },
-      four: { type: Number, required: true },
-      five: { type: Number, required: true },
-      six: { type: Number, required: true },
+      one: { type: String, required: true },
+      two: { type: String, required: true },
+      tree: { type: String, required: true },
+      four: { type: String, required: true },
+      five: { type: String, required: true },
+      six: { type: String, required: true },
     },
   },
   note: { type: String, require: false, default: "" },
