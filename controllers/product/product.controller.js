@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
     if (existingProduct) {
       return res.status(401).send({
         status: false,
-        message: "มีสินค้านี้ในระบบแล้ว",
+        message: "เลขลำดับสินค้านี้มีในระบบแล้ว",
       });
     }
     const new_product = await new Products({
