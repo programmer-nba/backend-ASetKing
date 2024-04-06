@@ -35,8 +35,8 @@ const ProductCreateHisSchema = new mongoose.Schema({
       timestamps: { type: Date, required: false, default: Date.now() },
     },
   ],
-});
-
+});  
+  
 const ProductsHistory = mongoose.model(
   "ProductsHistory",
   ProductCreateHisSchema
