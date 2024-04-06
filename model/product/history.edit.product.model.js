@@ -24,7 +24,10 @@ const HistoryProductSchema = new mongoose.Schema({
   lnsure: { type: String, require: false, default: "" }, //ประกัน
   update: { type: Array, required: false, default: [] },
   link_spec: { type: String, require: false, default: "" },
-  link_document: { type: String, require: false, default: "" },
+  link_document: { type: [{
+    name: { type: String, require: false, default: "" },
+    link: { type: String, require: false, default: "" },
+  }], require: false, default: "" },
   link_img: { type: String, require: false, default: "" },
 });
 
@@ -51,7 +54,7 @@ const validates = (data) => {
     lnsure: Joi.string().default(""),
     update: Joi.array().default([]),
     link_spec: Joi.string().default(""),
-    link_document: Joi.string().default(""),
+    link_document: Joi.default(""),
     link_img: Joi.string().default(""),
   });
   return schema.validate(data);

@@ -24,7 +24,10 @@ const ProductSchema = new mongoose.Schema({
   lnsure: { type: String, require: false, default: "" }, //ประกัน
   update: { type: Array, required: false, default: [] },
   link_spec: { type: String, require: false, default: "" },
-  link_document: { type: String, require: false, default: "" },
+  link_document: { type: [{
+    name: { type: String, require: false, default: "" },
+    link: { type: String, require: false, default: "" },
+  }], require: false, default: "" },
   link_img: { type: String, require: false, default: "" },
 });
 
