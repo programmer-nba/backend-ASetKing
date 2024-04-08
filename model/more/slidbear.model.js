@@ -6,9 +6,10 @@ const SlidbearSchema = new mongoose.Schema({
   profile_image: { type: String, required: false }, //รูปภาพ
   func_detail: { type: String, required: false },
   func_discription: { type: String, default: "ไม่มี" },
-  type:{type: String, required: false, default: ""},
-  subtype:{type: String, required: false, default: ""},
-  timestamp: {type: Date, required: false, default: Date.now()},
+  type: { type: String, required: false, default: "" },
+  subtype: { type: String, required: false, default: "" },
+  timestamp: { type: Date, required: false, default: Date.now() },
+  emp: { type: String, required: false, default: "" },
 });
 
 const Slidbear = mongoose.model("Slidbear", SlidbearSchema);
