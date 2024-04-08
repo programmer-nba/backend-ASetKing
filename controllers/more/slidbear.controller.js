@@ -42,16 +42,16 @@ exports.create = async (req, res) => {
       // emp: req.body.emp,
       // timestamp: dayjs(Date.now()).format(""),
       // });
-      const admin = new Slidbear({
+      const slid = new Slidbear({
         ...req.body,
         timestamp: dayjs(Date.now()).format(""),
       })
-      admin.save();
+      slid.save();
       // const add = await admin.save();
       return res.status(200).send({
         status: true,
-        message: "คุณได้สร้างไอดี user เรียบร้อย",
-        data: admin,
+        message: "เพิ่มข้อมูลเรียบร้อย",
+        data: slid,
       });
     });
   } catch (error) {
