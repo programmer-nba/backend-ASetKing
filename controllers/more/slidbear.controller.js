@@ -32,21 +32,26 @@ exports.create = async (req, res) => {
         }
         profile_image = reqFiles[0];
       }
+      // const admin = new Slidbear({
+      // profile_image: profile_image,
+      // func_type: req.body.func_type,
+      // func_detail: req.body.func_detail,
+      // type: req.body.type,
+      // subtype: req.body.subtype,
+      // func_discription: req.body.func_discription,
+      // emp: req.body.emp,
+      // timestamp: dayjs(Date.now()).format(""),
+      // });
       const admin = new Slidbear({
-        profile_image: profile_image,
-        func_type: req.body.func_type,
-        func_detail: req.body.func_detail,
-        type: req.body.type,
-        subtype: req.body.subtype,
-        func_discription: req.body.func_discription,
-        emp: req.body.emp,
+        ...req.body,
         timestamp: dayjs(Date.now()).format(""),
-      });
-      const add = await admin.save();
+      })
+      admin.save();
+      // const add = await admin.save();
       return res.status(200).send({
         status: true,
         message: "คุณได้สร้างไอดี user เรียบร้อย",
-        data: add,
+        data: admin,
       });
     });
   } catch (error) {
