@@ -39,6 +39,7 @@ exports.create = async (req, res) => {
         type: req.body.type,
         subtype: req.body.subtype,
         func_discription: req.body.func_discription,
+        emp: req.body.emp,
         timestamp: dayjs(Date.now()).format(""),
       });
       const add = await admin.save();
