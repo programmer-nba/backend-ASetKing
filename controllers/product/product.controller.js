@@ -154,13 +154,13 @@ exports.update = async (req, res) => {
 
     const id = req.params.id;
     const ChckProduct = await Products.findOne({
-      number: req.body.number,
+      // number: req.body.number,
       _id: { $ne: id },
     });
-    if (ChckProduct) {
+    if (!ChckProduct) {
       return res.status(400).send({
         status: false,
-        message: "ไม่สามารถอัปเดตข้อมูล เนื่องจากมี number ที่ซ้ำกันแล้ว",
+        message: "ไม่มีข้อมูล",
       });
     }
     
