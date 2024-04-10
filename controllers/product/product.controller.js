@@ -180,6 +180,8 @@ exports.update = async (req, res) => {
         description: req.body.description,
         pricture: req.body.pricture,
         
+        link_spec: item.link_spec,
+        link_document: item.link_document,
         link_img: (req.body.pricture != '' ? "https://drive.google.com/file/d/" +req.body.pricture +"/view?usp=sharing":"") ,
         update: {
           name: req.body.update.name,

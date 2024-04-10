@@ -19,6 +19,7 @@ const EmployeeSchema = new mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, required: true},
   position: {type: String, required: true},
+  subposition: {type: String, required: false},
   date_start: {type: Date, required: false, default: Date.now()},
   slidbeargeneral: {type: Boolean, required: false},
   slidbearproduct: {type: Boolean, required: false},
