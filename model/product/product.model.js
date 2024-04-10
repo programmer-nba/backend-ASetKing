@@ -22,7 +22,10 @@ const ProductSchema = new mongoose.Schema({
   },
   note: { type: String, require: false, default: "" },
   lnsure: { type: String, require: false, default: "" }, //ประกัน
-  update: { type: Array, required: false, default: [] },
+  update: { type: [{
+    name: { type: String, require: false, default: "" },
+    timestamp: { type: Date, require: false, default: Date.now() },
+  }], required: false, default: [] },
   link_spec: { type: String, require: false, default: "" },
   link_document: { type: [{
     name: { type: String, require: false, default: "" },

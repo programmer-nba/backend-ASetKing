@@ -455,13 +455,14 @@ exports.actionProduct = async (req, res) => {
 exports.DeleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
-
+    const name = req.body.name;
+   
     const updateStatus = await Products.findOneAndUpdate(
       { _id: id },
-      { $set: { status: "ลบสินค้า" } },
+      { status: "ลบสินค้า",$push:{update:{name:name,timestamp:Date.now()}} } ,
       { new: true }
     );
-
+    
     if (updateStatus) {
       return res.status(200).send({
         status: true,
