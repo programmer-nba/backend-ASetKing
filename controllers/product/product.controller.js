@@ -163,6 +163,7 @@ exports.update = async (req, res) => {
         message: "ไม่สามารถอัปเดตข้อมูล เนื่องจากมี number ที่ซ้ำกันแล้ว",
       });
     }
+    
     Products.findByIdAndUpdate(
       id,
       {
@@ -180,13 +181,15 @@ exports.update = async (req, res) => {
         description: req.body.description,
         pricture: req.body.pricture,
         
-        link_spec: item.link_spec,
-        link_document: item.link_document,
+        link_spec: req.body.link_spec,
+        link_document: req.body.link_document,
         link_img: (req.body.pricture != '' ? "https://drive.google.com/file/d/" +req.body.pricture +"/view?usp=sharing":"") ,
-        update: {
-          name: req.body.update.name,
-          timestamp: req.body.update.timestamp,
-        },
+         $push:{
+          update: {
+            name: req.body.update.name,
+            timestamp: req.body.update.timestamp,
+          },
+         }
       },
       {
         useFindAndModify: false,
@@ -194,6 +197,7 @@ exports.update = async (req, res) => {
       }
     )
       .then(async (item) => {
+        
         if (!item)
           return res
             .status(404)
@@ -246,6 +250,7 @@ exports.update = async (req, res) => {
         }
       })
       .catch((err) => {
+       
         console.log(err);
         return res
           .status(500)
