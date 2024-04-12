@@ -24,6 +24,7 @@ const EmployeeSchema = new mongoose.Schema({
   slidbeargeneral: {type: Boolean, required: false},
   slidbearproduct: {type: Boolean, required: false},
   price:{type:{
+    one:{type:Boolean,default:false},
     two:{type:Boolean,default:false},
     tree:{type:Boolean,default:false},
     four:{type:Boolean,default:false},

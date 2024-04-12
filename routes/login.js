@@ -59,6 +59,7 @@ const checkEmployee = async (req, res) => {
           name: employee.name,
           username: employee.username,
           position: employee.position,
+          subposition: employee?.subposition,
         };
         return res.status(200).send({
           token: token,

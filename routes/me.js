@@ -29,7 +29,9 @@ router.post("/", auth, async (req, res) => {
             username: item.username,
             level: "employee",
             position: item.position,
+            subposition: item?.subposition,
             price: {
+              one: item.price.one,
               two: item.price.two,
               tree: item.price.tree,
               four: item.price.four,

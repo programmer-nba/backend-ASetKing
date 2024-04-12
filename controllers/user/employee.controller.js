@@ -25,6 +25,7 @@ exports.create = async (req, res) => {
         slidbeargeneral:true,
         slidbearproduct:true,
         price:{
+          one:true,
           two:true,
           tree:true,
           four:true,
