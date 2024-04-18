@@ -29,7 +29,7 @@ const EmployeeSchema = new mongoose.Schema({
     tree:{type:Boolean,default:false},
     four:{type:Boolean,default:false},
     five:{type:Boolean,default:false},
-    six:{type:Boolean,default:false},  
+    six:{type:Boolean,default:true},  
   },default:null},
   // level: {type: String, required: true},
 });
