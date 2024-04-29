@@ -44,6 +44,7 @@ exports.create = async (req, res) => {
       // });
       const slid = new Slidbear({
         ...req.body,
+        profile_image: profile_image,
         timestamp: dayjs(Date.now()).format(""),
       })
       slid.save();
