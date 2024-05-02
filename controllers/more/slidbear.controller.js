@@ -15,7 +15,7 @@ const dayjs = require("dayjs");
 
 exports.create = async (req, res) => {
   try {
-    let upload = multer({ storage: storage }).array("profile_image", 20);
+    let upload = multer({ storage: storage }).array("imgCollection", 20);
     upload(req, res, async function (err) {
      
       const reqFiles = [];
@@ -45,7 +45,7 @@ exports.create = async (req, res) => {
       // emp: req.body.emp,
       // timestamp: dayjs(Date.now()).format(""),
       // });
-  
+      console.log(profile_image);
       const slid = new Slidbear({
         ...req.body,
         profile_image: profile_image,
@@ -108,7 +108,7 @@ exports.getByproduct = async (req, res) => {
 
 exports.EditSliBear = async (req, res) => {
   try {
-    let upload = multer({ storage: storage }).array("profile_image", 20);
+    let upload = multer({ storage: storage }).array("imgCollection", 20);
     upload(req, res, async function (err) {
       const reqFiles = [];
       const result = [];
