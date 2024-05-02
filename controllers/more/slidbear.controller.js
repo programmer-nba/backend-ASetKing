@@ -17,6 +17,7 @@ exports.create = async (req, res) => {
   try {
     let upload = multer({ storage: storage }).array("imgCollection", 20);
     upload(req, res, async function (err) {
+     
       const reqFiles = [];
       const result = [];
       if (err) {
@@ -31,7 +32,9 @@ exports.create = async (req, res) => {
           //   reqFiles.push(url + "/public/" + req.files[i].filename);
         }
         profile_image = reqFiles[0];
+        console.log(reqFiles[0])
       }
+      
       // const admin = new Slidbear({
       // profile_image: profile_image,
       // func_type: req.body.func_type,
@@ -42,12 +45,14 @@ exports.create = async (req, res) => {
       // emp: req.body.emp,
       // timestamp: dayjs(Date.now()).format(""),
       // });
+  
       const slid = new Slidbear({
         ...req.body,
         profile_image: profile_image,
-        timestamp: dayjs(Date.now()).format(""),
+       
       })
       slid.save();
+     
       // const add = await admin.save();
       return res.status(200).send({
         status: true,

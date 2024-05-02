@@ -6,6 +6,9 @@ const CLIENT_SECRET = process.env.GOOGLE_DRIVE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.GOOGLE_DRIVE_REDIRECT_URI;
 const REFRESH_TOKEN = process.env.GOOGLE_DRIVE_REFRESH_TOKEN;
 
+
+
+
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
@@ -19,27 +22,26 @@ const drive = google.drive({
 
 async function uploadFileCreate(req, res, {i, reqFiles}) {
   const filePath = req[i].path;
-
-  
   let fileMetaData = {
     name: req.originalname,
-    parents: [process.env.GOOGLE_DRIVE_NBA_HOTEL],
+    parents: [process.env.GOOGLE_DRIVE_IMAGE_FUNCTION],
   };
   let media = {
     body: fs.createReadStream(filePath),
   };
   try {
+    
     const response = await drive.files.create({
       resource: fileMetaData,
       media: media,
-    });
+    }).catch((error)=>{return console.log(error.message)});
+    if(!response) return console.log("error");
 
     generatePublicUrl(response.data.id);
     reqFiles.push(response.data.id);
-    console.log(response.data.id);
     return response.data.id;
   } catch (error) {
-    res.status(500).send({message: "Internal Server Error"});
+    return res.status(500).send({message: error.message});
   }
 }
 
@@ -85,5 +87,9 @@ async function deleteFile(fileId) {
   // console.log(res);
   return res.data;
 }
+
+
+
+
 
 module.exports = {uploadFileCreate, deleteFile};
