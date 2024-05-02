@@ -15,7 +15,7 @@ const dayjs = require("dayjs");
 
 exports.create = async (req, res) => {
   try {
-    let upload = multer({ storage: storage }).array("imgCollection", 20);
+    let upload = multer({ storage: storage }).array("profile_image", 20);
     upload(req, res, async function (err) {
      
       const reqFiles = [];
@@ -108,7 +108,7 @@ exports.getByproduct = async (req, res) => {
 
 exports.EditSliBear = async (req, res) => {
   try {
-    let upload = multer({ storage: storage }).array("imgCollection", 20);
+    let upload = multer({ storage: storage }).array("profile_image", 20);
     upload(req, res, async function (err) {
       const reqFiles = [];
       const result = [];
