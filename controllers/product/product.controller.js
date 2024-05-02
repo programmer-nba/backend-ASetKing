@@ -7,6 +7,7 @@ const {
 const {
   ProductsHistory,
 } = require("../../model/product/history.create.product.model");
+const { update } = require("./category.main.controller");
 
 exports.create = async (req, res) => {
   try {
@@ -32,6 +33,9 @@ exports.create = async (req, res) => {
       ...req.body,
       pricture: image,
       description: description,
+      update:{
+        name: req.body.update.name,
+      }
     }).save();
 
     const productsHistory = await new ProductsHistory({
