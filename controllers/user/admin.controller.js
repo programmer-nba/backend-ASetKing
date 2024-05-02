@@ -23,6 +23,7 @@ exports.create = async (req, res) => {
       ...req.body,
       admin_password: hashPassword,
       admin_date_start: Date.now(),
+      admin_position:"admin"
     }).save();
     return res.status(200).send({status: true, message: "เพิ่มแอดมินสำเร็จ"});
   } catch (err) {
