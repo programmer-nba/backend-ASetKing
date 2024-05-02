@@ -187,7 +187,7 @@ exports.update = async (req, res) => {
          $push:{
           update: {
             name: req.body.update.name,
-            timestamp: req.body.update.timestamp,
+           
           },
          }
       },
