@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const day = require("dayjs");
 
 const ProductSchema = new mongoose.Schema({
   number: { type: String, required: true },
@@ -24,7 +25,7 @@ const ProductSchema = new mongoose.Schema({
   lnsure: { type: String, require: false, default: "" }, //ประกัน
   update: { type: [{
     name: { type: String, require: false, default: "" },
-    timestamp: { type: Date, require: false, default: Date.now() },
+    timestamp: {type: Date, required: false ,default: day().format()},
   }], required: false, default: [] },
   link_spec: { type: String, require: false, default: "" },
   link_document: { type: [{

@@ -35,6 +35,7 @@ exports.create = async (req, res) => {
       description: description,
       update:{
         name: req.body.update.name,
+        timestamp: Date.now()
       }
     }).save();
 
@@ -44,6 +45,7 @@ exports.create = async (req, res) => {
       description: description,
       update:{
         name: req.body.update.name,
+        timestamp: Date.now()
       }
     });
     const historyProduct = await productsHistory.save();
@@ -194,6 +196,7 @@ exports.update = async (req, res) => {
          $push:{
           update: {
             name: req.body.update.name,
+            timestamp: Date.now(),
            
           },
          }
