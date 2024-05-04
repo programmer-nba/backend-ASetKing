@@ -42,6 +42,9 @@ exports.create = async (req, res) => {
       ...req.body,
       pricture: image,
       description: description,
+      update:{
+        name: req.body.update.name,
+      }
     });
     const historyProduct = await productsHistory.save();
 
