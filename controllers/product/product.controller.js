@@ -33,20 +33,24 @@ exports.create = async (req, res) => {
       ...req.body,
       pricture: image,
       description: description,
-      update:{
-        name: req.body.update.name,
-        timestamp: Date.now()
-      }
+      $push :{
+        update:{
+          name: req.body.update.name,
+          timestamp: Date.now()
+        }
+      } 
     }).save();
 
     const productsHistory = await new ProductsHistory({
       ...req.body,
       pricture: image,
       description: description,
-      update:{
-        name: req.body.update.name,
-        timestamp: Date.now()
-      }
+      $push :{
+        update:{
+          name: req.body.update.name,
+          timestamp: Date.now()
+        }
+      } 
     });
     const historyProduct = await productsHistory.save();
 
@@ -197,7 +201,6 @@ exports.update = async (req, res) => {
           update: {
             name: req.body.update.name,
             timestamp: Date.now(),
-           
           },
          }
       },
