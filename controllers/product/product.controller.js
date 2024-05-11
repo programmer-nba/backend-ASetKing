@@ -180,22 +180,7 @@ exports.update = async (req, res) => {
     Products.findByIdAndUpdate(
       id,
       {
-        price: {
-          one: req.body.price.one,
-          two: req.body.price.two,
-          tree: req.body.price.tree,
-          four: req.body.price.four,
-          five: req.body.price.five,
-          six: req.body.price.six,
-        },
-        hl: req.body.hl,
-        note: req.body.note,
-        lnsure: req.body.lnsure,
-        description: req.body.description,
-        pricture: req.body.pricture,
-        
-        link_spec: req.body.link_spec,
-        link_document: req.body.link_document,
+        ...req.body,
         link_img: (req.body.pricture != '' ? "https://drive.google.com/file/d/" +req.body.pricture +"/view?usp=sharing":"") ,
          $push:{
           update: {
