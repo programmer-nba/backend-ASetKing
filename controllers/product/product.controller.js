@@ -8,6 +8,7 @@ const {
   ProductsHistory,
 } = require("../../model/product/history.create.product.model");
 const { update } = require("./category.main.controller");
+const line = require("../../lib/line.notify");
 
 exports.create = async (req, res) => {
   try {
@@ -33,24 +34,24 @@ exports.create = async (req, res) => {
       ...req.body,
       pricture: image,
       description: description,
-      $push :{
-        update:{
+      $push: {
+        update: {
           name: req.body.update.name,
           timestamp: Date.now()
         }
-      } 
+      }
     }).save();
 
     const productsHistory = await new ProductsHistory({
       ...req.body,
       pricture: image,
       description: description,
-      $push :{
-        update:{
+      $push: {
+        update: {
           name: req.body.update.name,
           timestamp: Date.now()
         }
-      } 
+      }
     });
     const historyProduct = await productsHistory.save();
 
@@ -176,96 +177,97 @@ exports.update = async (req, res) => {
         message: "ไม่มีข้อมูล",
       });
     }
-    
-    Products.findByIdAndUpdate(
-      id,
-      {
-        category_main: req.body.category_main,
-        category_second: req.body.category_second,
-        model: req.body.model,
-        pricture: req.body.pricture,
-        hl: req.body.hl,
-        description: req.body.description,
-        price: {
-            one: req.body.price.one,
-            two: req.body.price.two,
-            tree: req.body.price.tree,
-            four: req.body.price.four,
-            five: req.body.price.five,
-            six: req.body.price.six,
-        },
-        note: req.body.note,
-        lnsure: req.body.lnsure, //ประกัน
-        link_spec: req.body.link_spec,
-        link_document: req.body.link_document,
-        link_img: (req.body.pricture != '' ? "https://drive.google.com/file/d/" +req.body.pricture +"/view?usp=sharing":"") ,
-         $push:{
-          update: {
-            name: req.body.update.name,
-            timestamp: Date.now(),
-          },
-         }
-      },
-      {
-        useFindAndModify: false,
-        new: true,
-      }
-    )
-      .then(async (item) => {
-        
-        if (!item)
-          return res
-            .status(404)
-            .send({ status: false, message: "....แก้ไขข้อมูลไม่สำเร็จ" });
 
-        const updatedProduct = await Products.findOne({ _id: id });
-        if (updatedProduct) {
-          const historyData = new HistoryProducts({
-            number: item.number,
-            status: item.status,
-            category_main: item.category_main,
-            category_second: item.category_second,
-            model: item.model,
-            pricture: item.pricture,
-            description: item.description,
-            hl: item.hl,
-            description: item.description,
-            price: {
-              one: item.price.one,
-              two: item.price.two,
-              tree: item.price.tree,
-              four: item.price.four,
-              five: item.price.five,
-              six: item.price.six,
-            },
-            note: item.note,
-            lnsure: item.lnsure,
-            update: item.update,
-            link_spec: item.link_spec,
-            link_document: item.link_document,
-            link_img: item.link_img,
+    Products.findByIdAndUpdate(id, {
+      category_main: req.body.category_main,
+      category_second: req.body.category_second,
+      model: req.body.model,
+      pricture: req.body.pricture,
+      hl: req.body.hl,
+      description: req.body.description,
+      price: {
+        one: req.body.price.one,
+        two: req.body.price.two,
+        tree: req.body.price.tree,
+        four: req.body.price.four,
+        five: req.body.price.five,
+        six: req.body.price.six,
+      },
+      note: req.body.note,
+      lnsure: req.body.lnsure, //ประกัน
+      link_spec: req.body.link_spec,
+      link_document: req.body.link_document,
+      link_img: (req.body.pricture != '' ? "https://drive.google.com/file/d/" + req.body.pricture + "/view?usp=sharing" : ""),
+      $push: {
+        update: {
+          name: req.body.update.name,
+          timestamp: Date.now(),
+        },
+      }
+    }, {
+      useFindAndModify: false,
+      new: true,
+    }).then(async (item) => {
+      if (!item)
+        return res
+          .status(404)
+          .send({ status: false, message: "....แก้ไขข้อมูลไม่สำเร็จ" });
+
+      const message = `
+สินค้า : ${item.model}
+รายการสินค้าดังกล่าวมีการอัพเดทข้อมูลใหม่
+
+สามารถตรวจสอบได้ที่ : ...............`;
+      await line.linenotify(message);
+      const updatedProduct = await Products.findOne({ _id: id });
+      if (updatedProduct) {
+        const historyData = new HistoryProducts({
+          number: item.number,
+          status: item.status,
+          category_main: item.category_main,
+          category_second: item.category_second,
+          model: item.model,
+          pricture: item.pricture,
+          description: item.description,
+          hl: item.hl,
+          description: item.description,
+          price: {
+            one: item.price.one,
+            two: item.price.two,
+            tree: item.price.tree,
+            four: item.price.four,
+            five: item.price.five,
+            six: item.price.six,
+          },
+          note: item.note,
+          lnsure: item.lnsure,
+          update: item.update,
+          link_spec: item.link_spec,
+          link_document: item.link_document,
+          link_img: item.link_img,
+        });
+        const historyProduct = await historyData.save();
+        if (historyProduct) {
+          return res.status(200).send({
+            status: true,
+            message: "แก้ไขข้อมูลสำเร็จ",
+            data: updatedProduct,
           });
-          const historyProduct = await historyData.save();
-          if (historyProduct) {
-            return res.status(200).send({
-              status: true,
-              message: "แก้ไขข้อมูลสำเร็จ",
-              data: updatedProduct,
-            });
-          } else {
-            return res.status(500).send({
-              status: false,
-              message: "เกิดข้อผิดพลาดในการบันทึกประวัติ",
-            });
-          }
         } else {
-          return res
-            .status(403)
-            .send({ message: "เกิดข้อผิดพลาดเกี่ยวกับผู้อัปเดต" });
+          return res.status(500).send({
+            status: false,
+            message: "เกิดข้อผิดพลาดในการบันทึกประวัติ",
+          });
         }
-      })
+
+      } else {
+        return res
+          .status(403)
+          .send({ message: "เกิดข้อผิดพลาดเกี่ยวกับผู้อัปเดต" });
+      }
+    })
       .catch((err) => {
-       
+
         console.log(err);
         return res
           .status(500)
@@ -471,13 +473,13 @@ exports.DeleteProduct = async (req, res) => {
   try {
     const id = req.params.id;
     const name = req.body.name;
-   
+
     const updateStatus = await Products.findOneAndUpdate(
       { _id: id },
-      { status: "ลบสินค้า",$push:{update:{name:name,timestamp:Date.now()}} } ,
+      { status: "ลบสินค้า", $push: { update: { name: name, timestamp: Date.now() } } },
       { new: true }
     );
-    
+
     if (updateStatus) {
       return res.status(200).send({
         status: true,

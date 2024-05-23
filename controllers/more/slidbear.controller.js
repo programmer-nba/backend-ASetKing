@@ -12,12 +12,14 @@ const {
 } = require("../../funtions/uploadfilecreate");
 const { admin } = require("googleapis/build/src/apis/admin");
 const dayjs = require("dayjs");
+const line = require("../../lib/line.notify");
+const { Subslidbear } = require("../../model/more/subslidbear.model");
 
 exports.create = async (req, res) => {
   try {
     let upload = multer({ storage: storage }).array("imgCollection", 20);
     upload(req, res, async function (err) {
-     
+
       const reqFiles = [];
       const result = [];
       if (err) {
@@ -34,7 +36,7 @@ exports.create = async (req, res) => {
         profile_image = reqFiles[0];
         console.log(reqFiles[0])
       }
-      
+      const notice = await Subslidbear.findOne({ _id: req.body.subtype });
       // const admin = new Slidbear({
       // profile_image: profile_image,
       // func_type: req.body.func_type,
@@ -49,10 +51,15 @@ exports.create = async (req, res) => {
       const slid = new Slidbear({
         ...req.body,
         profile_image: profile_image,
-       
       })
       slid.save();
-     
+      const message = `
+
+ประกาศ : ${notice.name}
+${notice.name} มีการเพิ่มประกาศใหม่จากทางบริษัท
+
+สามารถตรวจสอบได้ที่ : ...............`;
+      await line.linenotify(message);
       // const add = await admin.save();
       return res.status(200).send({
         status: true,
@@ -137,6 +144,14 @@ exports.EditSliBear = async (req, res) => {
           ...req.body,
         });
       }
+      const notice = await Subslidbear.findOne({ _id: req.body.subtype });
+      const message = `
+
+อัพเดท : ${notice.name}
+${notice.name} มีการอัพเดทประกาศใหม่จากทางบริษัท
+
+สามารถตรวจสอบได้ที่ : ...............`;
+      await line.linenotify(message);
       return res
         .status(200)
         .send({ message: "เเก้ไขข้อมุลสำเร็จ", status: true });

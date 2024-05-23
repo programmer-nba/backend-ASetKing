@@ -7,8 +7,8 @@ const cors = require("cors");
 const concention = require("./config/db");
 concention();
 
-app.use(bodyParser.json({limit: "50mb", type: "application/json"}));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json({ limit: "50mb", type: "application/json" }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
 app.use(cors());
@@ -47,9 +47,6 @@ app.use("/ASetKing/subslidbeargeneral", require("./routes/subslidbear/subslidbea
 app.use("/ASetKing/subslidbearproduct", require("./routes/subslidbear/subslidbearproduct"));
 
 const port = process.env.PORT || 1234;
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-  
-    
-
-} );
+});
